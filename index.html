@@ -1,599 +1,1126 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#245e3d">
-  <meta name="description" content="Cosecha Libre: una propuesta para conectar productores y compradores locales en Costa Rica.">
-  <title>Cosecha Libre · Del campo, más cerca</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#245e3d">
+<title>Cosecha Libre · Inicio</title>
 
-  <style>
-    :root {
-      --verde: #245e3d;
-      --verde-oscuro: #173d29;
-      --verde-claro: #edf5e9;
-      --verde-suave: #f6f9f3;
-      --borde: #dfe8da;
-      --texto: #171c18;
-      --secundario: #424a43;
-      --sidebar: 245px;
-    }
+<style>
+:root{
+  --verde:#245e3d;
+  --verde-oscuro:#173d29;
+  --verde-claro:#edf5e9;
+  --verde-suave:#f7faf5;
+  --borde:#dce7d8;
+  --texto:#171d18;
+  --secundario:#4d574f;
+  --lateral:250px
+}
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; scroll-padding-top: 30px; }
-    body {
-      margin: 0;
-      background: white;
-      color: var(--texto);
-      font-family: Arial, Helvetica, sans-serif;
-      line-height: 1.65;
-    }
+*{box-sizing:border-box}
 
-    button, input, select { font: inherit; }
-    button, a { -webkit-tap-highlight-color: transparent; }
-    button { cursor: pointer; }
-    a { color: inherit; text-decoration: none; }
-    button:disabled { cursor: not-allowed; opacity: .65; }
+html{min-height:100%}
 
-    :focus-visible {
-      outline: 3px solid #78a35b;
-      outline-offset: 4px;
-    }
+body{
+  margin:0;
+  min-height:100vh;
+  background:#fff;
+  color:var(--texto);
+  font-family:Arial,Helvetica,sans-serif;
+  line-height:1.6
+}
 
-    h1, h2, h3 { line-height: 1.15; letter-spacing: -.04em; }
-    h1, h2, h3, p { margin-top: 0; }
-    h1 { font-size: clamp(38px, 4vw, 62px); font-weight: 600; }
-    h2 { font-size: clamp(27px, 3vw, 39px); font-weight: 500; }
-    h3 { font-size: 20px; }
-    p { color: var(--secundario); }
-    [hidden] { display: none !important; }
+button,input,select{font:inherit}
+button{cursor:pointer}
+button:disabled{cursor:not-allowed;opacity:.65}
 
-    .skip {
-      position: fixed;
-      top: -70px;
-      left: 15px;
-      z-index: 100;
-      padding: 12px;
-      background: white;
-    }
-    .skip:focus { top: 10px; }
+h1,h2,h3,p{margin-top:0}
 
-    .simbolos { position: absolute; width: 0; height: 0; }
-    .planta { width: 64px; height: 64px; color: #648f49; }
+h1,h2,h3{
+  line-height:1.14;
+  letter-spacing:-.035em
+}
 
-    .sidebar {
-      position: fixed;
-      inset: 0 auto 0 0;
-      width: var(--sidebar);
-      padding: 36px 24px;
-      border-right: 1px solid var(--borde);
-      background: white;
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
-      z-index: 40;
-    }
+h1{
+  font-size:clamp(40px,4.5vw,64px);
+  font-weight:600
+}
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      color: var(--verde);
-      font-size: 35px;
-      font-weight: 700;
-      letter-spacing: -2px;
-      line-height: .95;
-    }
-    .logo svg { width: 36px; height: 58px; }
-    .logo em { display: block; font-weight: 400; }
-    .lema {
-      margin: 22px 0 38px;
-      color: var(--verde);
-      font-size: 9px;
-      letter-spacing: 2px;
-    }
+h2{
+  font-size:clamp(28px,3vw,42px);
+  font-weight:500
+}
 
-    nav { display: grid; gap: 7px; }
-    nav a {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px;
-      border-radius: 6px;
-      font-size: 13px;
-    }
-    nav a:hover, nav a.activo {
-      background: var(--verde-claro);
-      color: var(--verde-oscuro);
-    }
-    nav a.activo { font-weight: 700; }
-    nav a span { width: 20px; font-size: 20px; text-align: center; }
+h3{font-size:20px}
+p{color:var(--secundario)}
+[hidden]{display:none!important}
 
-    .sidebar-pie { margin-top: auto; padding: 40px 10px 0; }
-    .sidebar-pie strong { display: block; font-size: 16px; font-weight: 500; }
-    .sidebar-pie p { font-size: 12px; margin: 12px 0 18px; }
-    .etiqueta {
-      display: inline-block;
-      border: 1px solid var(--borde);
-      border-radius: 4px;
-      padding: 5px 9px;
-      color: var(--verde);
-      font-size: 9px;
-      letter-spacing: 1px;
-    }
+:focus-visible{
+  outline:3px solid #75a45b;
+  outline-offset:4px
+}
 
-    .pagina { margin-left: var(--sidebar); }
-    .barra-superior {
-      min-height: 75px;
-      margin: 0 40px;
-      border-bottom: 1px solid var(--borde);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      font-size: 11px;
-    }
-    .ruta { color: var(--secundario); }
-    .ruta span { margin: 0 12px; }
-    .estado { display: flex; align-items: center; gap: 7px; }
-    .estado::before {
-      content: "";
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #58883e;
-    }
-    .marca-movil { display: none; }
-    .boton-icono {
-      min-width: 44px;
-      min-height: 44px;
-      border: 0;
-      background: transparent;
-      color: var(--verde-oscuro);
-      font-size: 26px;
-    }
-    #abrir-menu { display: none; }
+.simbolos{
+  position:absolute;
+  width:0;
+  height:0
+}
 
-    main { padding: 0 40px; }
-    .portada {
-      display: grid;
-      grid-template-columns: 1.05fr 1fr;
-      align-items: center;
-      gap: 35px;
-      padding: 38px 0 30px;
-      min-height: 465px;
-    }
-    .sobre-titulo {
-      display: block;
-      margin-bottom: 18px;
-      color: var(--verde);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 2px;
-    }
-    .portada p { max-width: 450px; font-size: 15px; }
-    .acciones { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin: 28px 0; }
+.planta{
+  width:62px;
+  height:62px;
+  color:#6f9b55
+}
 
-    .boton {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      gap: 18px;
-      min-height: 45px;
-      border: 1px solid var(--verde);
-      border-radius: 5px;
-      background: var(--verde);
-      color: white;
-      padding: 12px 19px;
-      font-size: 12px;
-      font-weight: 600;
-    }
-    .boton:hover:not(:disabled) { background: var(--verde-oscuro); }
-    .boton.secundario { background: white; color: var(--verde); }
-    .boton.secundario:hover { background: var(--verde-claro); }
-    .enlace { color: var(--verde); font-size: 12px; font-weight: 600; }
-    .portada .nota { font-size: 11px; }
+.sobre-titulo{
+  display:block;
+  margin-bottom:17px;
+  color:var(--verde);
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:2px
+}
 
-    .foto-portada {
-      position: relative;
-      height: 390px;
-      overflow: hidden;
-      border-radius: 9px;
-      background: var(--verde-claro);
-    }
-    .foto-portada > img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: 62% center;
-    }
-    .leyenda-foto {
-      position: absolute;
-      right: 20px;
-      bottom: 20px;
-      left: 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 16px;
-      border-radius: 6px;
-      background: rgba(255,255,255,.93);
-    }
-    .leyenda-foto svg { width: 42px; height: 50px; color: var(--verde); }
-    .leyenda-foto strong { display: block; font-size: 18px; font-weight: 500; line-height: 1.2; }
-    .leyenda-foto small { font-size: 10px; }
+.boton{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+  min-height:46px;
+  padding:11px 20px;
+  border:1px solid var(--verde);
+  border-radius:5px;
+  background:var(--verde);
+  color:#fff;
+  font-size:12px;
+  font-weight:700
+}
 
-    .aviso {
-      padding: 14px 17px;
-      border-left: 3px solid #82a36a;
-      background: var(--verde-suave);
-      font-size: 11px;
-    }
-    .seccion { padding: 58px 0; border-bottom: 1px solid var(--borde); }
-    .encabezado-seccion { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
-    .encabezado-seccion h2 { margin-bottom: 12px; }
-    .introduccion { font-size: 13px; }
+.boton:hover:not(:disabled){background:var(--verde-oscuro)}
 
-    .filtros {
-      display: grid;
-      grid-template-columns: 1.8fr 1fr 1.15fr auto;
-      align-items: end;
-      gap: 12px;
-      padding: 18px;
-      border: 1px solid var(--borde);
-      border-radius: 8px;
-      background: var(--verde-suave);
-      margin-top: 25px;
-    }
-    .filtros label { display: block; font-size: 11px; font-weight: 600; }
-    .filtros input, .filtros select {
-      width: 100%;
-      min-width: 0;
-      min-height: 45px;
-      margin-top: 6px;
-      padding: 10px;
-      border: 1px solid #d3ddce;
-      border-radius: 5px;
-      background: white;
-      color: var(--texto);
-      font-size: 12px;
-    }
-    .filtros > div { min-width: 0; }
-    .herramientas {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      margin: 24px 0 20px;
-    }
-    .categorias { display: flex; gap: 7px; }
-    .categoria {
-      min-height: 37px;
-      padding: 7px 15px;
-      border: 1px solid var(--borde);
-      border-radius: 25px;
-      background: white;
-      font-size: 11px;
-    }
-    .categoria.seleccionada { color: white; background: var(--verde-oscuro); border-color: var(--verde-oscuro); }
-    #contador { font-size: 11px; color: var(--secundario); }
+.boton.secundario{
+  background:#fff;
+  color:var(--verde)
+}
 
-    .productos { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
-    .tarjeta { border: 1px solid var(--borde); border-radius: 8px; overflow: hidden; transition: transform .2s; }
-    .tarjeta:hover { transform: translateY(-3px); }
-    .ilustracion {
-      position: relative;
-      height: 155px;
-      display: grid;
-      place-items: center;
-      background: #edf3e6;
-    }
-    .tarjeta:nth-child(even) .ilustracion { background: #f3f6ee; }
-    .ilustracion svg { width: 125px; height: 125px; color: var(--verde); }
-    .ejemplo {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      padding: 3px 7px;
-      border: 1px solid var(--borde);
-      border-radius: 3px;
-      background: white;
-      font-size: 8px;
-    }
-    .tarjeta-info { padding: 18px; }
-    .tarjeta-info h3 { margin-bottom: 8px; }
-    .tarjeta-info p { font-size: 11px; }
-    .disponibilidad { padding-top: 12px; border-top: 1px solid var(--borde); }
-    .ver-detalle {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      min-height: 35px;
-      padding: 0;
-      border: 0;
-      background: none;
-      color: var(--verde);
-      font-size: 12px;
-      font-weight: 600;
-    }
-    .vacio { text-align: center; background: var(--verde-claro); padding: 35px; }
+.boton.secundario:hover{background:var(--verde-claro)}
 
-    .pasos, .columnas { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; margin-top: 30px; }
-    .pasos article { border-top: 1px solid #bfd0b6; padding-top: 18px; }
-    .numero { display: block; margin-bottom: 20px; font-size: 13px; color: var(--verde); }
-    .pasos p, .columnas p { font-size: 13px; }
-    .columnas h3 { font-size: 17px; }
+.enlace{
+  padding:0;
+  border:0;
+  background:transparent;
+  color:var(--verde);
+  font-size:12px;
+  font-weight:700
+}
 
-    .comunidad { display: grid; grid-template-columns: 1fr 1.15fr; gap: 50px; align-items: center; }
-    .comunidad p { font-size: 13px; }
-    .comunidad .aclaracion { font-size: 11px; }
-    .perfiles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .perfiles article { padding: 22px; border: 1px solid var(--borde); border-radius: 6px; background: var(--verde-suave); }
-    .perfiles h3 { font-size: 17px; }
-    .perfiles p { font-size: 12px; margin-bottom: 0; }
-    .icono-perfil { display: block; color: var(--verde); font-size: 28px; margin-bottom: 12px; }
+.etiqueta{
+  display:inline-block;
+  padding:5px 9px;
+  border:1px solid var(--borde);
+  border-radius:4px;
+  color:var(--verde);
+  font-size:9px;
+  letter-spacing:1px
+}
 
-    .proyecto > p { max-width: 720px; font-size: 14px; }
-    .preguntas { display: grid; grid-template-columns: 1fr 1.2fr; gap: 45px; }
-    .preguntas > div > p { max-width: 320px; font-size: 13px; }
-    details { border-bottom: 1px solid var(--borde); padding: 16px 0; }
-    summary { display: flex; justify-content: space-between; gap: 15px; cursor: pointer; font-size: 13px; font-weight: 600; list-style: none; }
-    summary::-webkit-details-marker { display: none; }
-    summary::after { content: "+"; color: var(--verde); }
-    details[open] summary::after { content: "−"; }
-    details p { margin: 13px 15px 0 0; font-size: 12px; }
+/* Menú lateral */
 
-    .contacto {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 25px;
-      padding: 30px;
-      margin: 40px 0;
-      border-radius: 8px;
-      background: var(--verde-claro);
-    }
-    .contacto h2 { max-width: 470px; font-size: 27px; }
-    .contacto p { font-size: 12px; margin-bottom: 0; }
-    .contacto small { display: block; text-align: center; font-size: 10px; margin-top: 10px; }
+.sidebar{
+  position:fixed;
+  inset:0 auto 0 0;
+  z-index:50;
+  width:var(--lateral);
+  padding:34px 23px;
+  border-right:1px solid var(--borde);
+  background:#fff;
+  display:flex;
+  flex-direction:column;
+  overflow:auto;
+  transition:transform .25s,visibility .25s
+}
 
-    footer { padding: 40px; border-top: 1px solid var(--borde); }
-    .footer-columnas { display: grid; grid-template-columns: 1.1fr .8fr 1fr 1.2fr; gap: 25px; font-size: 11px; }
-    .footer-columnas strong { display: block; margin-bottom: 12px; }
-    .footer-columnas a { display: block; margin-bottom: 8px; }
-    .footer-logo { color: var(--verde); font-size: 23px; font-weight: 700; letter-spacing: -1px; }
-    .footer-final { display: flex; justify-content: space-between; gap: 15px; border-top: 1px solid var(--borde); margin-top: 25px; padding-top: 20px; padding-bottom: 55px; font-size: 10px; }
+.menu-oculto .sidebar{
+  transform:translateX(-100%);
+  visibility:hidden
+}
 
-    .abrir-bot {
-      position: fixed;
-      bottom: 20px;
-      right: 22px;
-      z-index: 50;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 18px 9px 11px;
-      border: 1px solid white;
-      border-radius: 35px;
-      background: var(--verde-oscuro);
-      color: white;
-      box-shadow: 0 5px 25px #173d2926;
-      font-size: 12px;
-    }
-    .abrir-bot svg { width: 35px; height: 35px; }
-    .bot {
-      position: fixed;
-      right: 22px;
-      bottom: 88px;
-      z-index: 50;
-      width: 355px;
-      max-width: calc(100vw - 32px);
-      border: 1px solid var(--borde);
-      border-radius: 12px;
-      background: white;
-      box-shadow: 0 15px 55px #173d2926;
-      overflow: hidden;
-    }
-    .bot header { display: flex; align-items: center; gap: 10px; padding: 12px; background: var(--verde-claro); }
-    .bot header svg { width: 38px; height: 38px; color: var(--verde); }
-    .bot header small { display: block; font-size: 9px; }
-    .bot header button { margin-left: auto; }
-    .bot-cuerpo { padding: 16px; max-height: 55vh; overflow-y: auto; }
-    .respuesta { background: var(--verde-suave); border-radius: 0 10px 10px 10px; padding: 14px; font-size: 12px; }
-    .bot-opciones { display: grid; gap: 7px; }
-    .bot-opciones button { padding: 10px; border: 1px solid var(--borde); border-radius: 5px; background: white; color: var(--verde); text-align: left; font-size: 11px; }
-    .bot-opciones button:hover { background: var(--verde-claro); }
+.logo{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:0;
+  border:0;
+  background:none;
+  color:var(--verde);
+  font-size:34px;
+  font-weight:700;
+  letter-spacing:-2px;
+  line-height:.93;
+  text-align:left
+}
 
-    dialog { width: calc(100% - 32px); max-width: 510px; padding: 30px; border: 1px solid var(--borde); border-radius: 12px; color: var(--texto); }
-    dialog::backdrop { background: #112c1bb3; }
-    dialog .cerrar-detalle { float: right; }
-    dialog p, dialog dl { font-size: 13px; }
-    dt { font-weight: 700; }
-    dd { margin: 0 0 12px; color: var(--secundario); }
+.logo svg{
+  width:37px;
+  height:57px
+}
 
-    @media (max-width: 1200px) {
-      :root { --sidebar: 210px; }
-      .sidebar { padding: 30px 16px; }
-      .logo { font-size: 31px; }
-      main { padding: 0 28px; }
-      .barra-superior { margin: 0 28px; }
-      .portada { gap: 22px; }
-      .foto-portada { height: 350px; }
-      .filtros { grid-template-columns: 1.5fr 1fr; }
-      .footer-columnas { grid-template-columns: 1fr 1fr; }
-      .contacto { align-items: flex-start; flex-direction: column; }
-    }
+.logo em{
+  display:block;
+  font-weight:400
+}
 
-    @media (max-width: 900px) {
-      :root { --sidebar: 190px; }
-      .sidebar { padding: 25px 12px; }
-      .logo { font-size: 28px; }
-      .logo svg { width: 28px; }
-      .lema { font-size: 8px; letter-spacing: 1px; }
-      nav a { font-size: 11px; padding: 10px 7px; gap: 8px; }
-      .portada { grid-template-columns: 1fr; }
-      .foto-portada { height: 280px; }
-      .productos { grid-template-columns: repeat(2,minmax(0,1fr)); }
-      .comunidad, .preguntas { grid-template-columns: 1fr; gap: 28px; }
-      .pasos, .columnas { gap: 15px; }
-      .pasos h3 { font-size: 17px; }
-    }
+.lema{
+  margin:21px 0 37px;
+  color:var(--verde);
+  font-size:9px;
+  letter-spacing:2.2px
+}
 
-    @media (max-width: 640px) {
-      .pagina { margin-left: 0; }
-      .sidebar { width: 240px; transform: translateX(-100%); visibility: hidden; transition: transform .2s; box-shadow: 10px 0 30px #173d2920; }
-      .sidebar.abierta { transform: translateX(0); visibility: visible; }
-      .sidebar .logo { font-size: 36px; }
-      .sidebar nav a { font-size: 13px; padding: 12px; }
-      .sidebar-pie { display: none; }
-      .barra-superior { margin: 0 18px; min-height: 65px; gap: 8px; }
-      .marca-movil { display: block; color: var(--verde); font-size: 23px; font-weight: 700; letter-spacing: -1px; }
-      .ruta { display: none; }
-      .estado { margin-left: auto; font-size: 9px; }
-      #abrir-menu { display: block; }
-      main { padding: 0 20px; }
-      .portada { padding-top: 28px; }
-      h1 { font-size: 42px; }
-      .foto-portada { height: 255px; }
-      .seccion { padding: 42px 0; }
-      .encabezado-seccion .planta { width: 42px; flex-shrink: 0; }
-      .filtros { padding: 13px; gap: 10px; }
-      .filtro-busqueda, .filtros > button { grid-column: 1/-1; }
-      .herramientas { flex-direction: column; align-items: flex-start; }
-      .productos { gap: 12px; }
-      .ilustracion { height: 135px; }
-      .ilustracion svg { width: 100px; height: 100px; }
-      .ejemplo { top: 8px; left: 7px; font-size: 7px; }
-      .tarjeta-info { padding: 12px; }
-      .tarjeta-info h3 { font-size: 18px; }
-      .tarjeta-info p { font-size: 10px; }
-      .pasos, .columnas { grid-template-columns: 1fr; gap: 20px; }
-      .numero { margin-bottom: 10px; }
-      .perfiles article { padding: 17px; }
-      .contacto { padding: 24px; }
-      footer { padding: 30px 20px 10px; }
-      .footer-final { flex-direction: column; }
-      .bot { right: 16px; bottom: 83px; }
-      .abrir-bot { right: 16px; bottom: 16px; }
-    }
+.menu{
+  display:grid;
+  gap:7px
+}
 
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      * { transition: none !important; }
-    }
-  </style>
+.menu button{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  width:100%;
+  min-height:46px;
+  padding:10px 12px;
+  border:0;
+  border-radius:6px;
+  background:transparent;
+  color:var(--texto);
+  text-align:left;
+  font-size:13px
+}
+
+.menu button:hover,
+.menu button.activo{
+  background:var(--verde-claro);
+  color:var(--verde-oscuro)
+}
+
+.menu button.activo{font-weight:700}
+
+.menu button span{
+  width:21px;
+  font-size:20px;
+  text-align:center
+}
+
+.sidebar-pie{
+  margin-top:auto;
+  padding:35px 10px 0
+}
+
+.sidebar-pie strong{
+  display:block;
+  font-size:16px;
+  font-weight:500
+}
+
+.sidebar-pie p{font-size:12px}
+
+/* Contenido principal */
+
+.pagina{
+  min-height:100vh;
+  margin-left:var(--lateral);
+  transition:margin-left .25s
+}
+
+.menu-oculto .pagina{margin-left:0}
+
+.barra-superior{
+  min-height:72px;
+  margin:0 40px;
+  border-bottom:1px solid var(--borde);
+  display:flex;
+  align-items:center;
+  gap:14px
+}
+
+.alternar-menu{
+  width:44px;
+  height:44px;
+  border:1px solid var(--borde);
+  border-radius:6px;
+  background:#fff;
+  color:var(--verde-oscuro);
+  font-size:22px
+}
+
+.alternar-menu:hover{background:var(--verde-claro)}
+
+.seccion-actual{
+  color:var(--secundario);
+  font-size:11px
+}
+
+.estado{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin-left:auto;
+  font-size:10px
+}
+
+.estado::before{
+  content:"";
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#56853f
+}
+
+main{
+  min-height:calc(100vh - 240px);
+  padding:0 40px
+}
+
+.vista{
+  display:none;
+  animation:aparecer .22s ease
+}
+
+.vista.activa{display:block}
+
+@keyframes aparecer{
+  from{
+    opacity:0;
+    transform:translateY(8px)
+  }
+  to{
+    opacity:1;
+    transform:none
+  }
+}
+
+/* Inicio */
+
+.portada{
+  display:grid;
+  grid-template-columns:1.05fr 1fr;
+  align-items:center;
+  gap:35px;
+  min-height:calc(100vh - 73px);
+  padding:35px 0
+}
+
+.portada p{
+  max-width:470px;
+  font-size:15px
+}
+
+.acciones{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:20px;
+  margin:28px 0
+}
+
+.nota{font-size:10px!important}
+
+.foto-portada{
+  position:relative;
+  height:430px;
+  overflow:hidden;
+  border-radius:9px;
+  background:var(--verde-claro)
+}
+
+.foto-portada>img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:62% center
+}
+
+.leyenda-foto{
+  position:absolute;
+  right:20px;
+  bottom:20px;
+  left:20px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:15px 17px;
+  border-radius:6px;
+  background:rgba(255,255,255,.94)
+}
+
+.leyenda-foto svg{
+  width:42px;
+  height:50px;
+  color:var(--verde)
+}
+
+.leyenda-foto strong{
+  display:block;
+  font-size:18px;
+  font-weight:500;
+  line-height:1.2
+}
+
+.leyenda-foto small{
+  font-size:9px;
+  color:var(--secundario)
+}
+
+/* Apartados */
+
+.encabezado-vista{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:25px;
+  padding:52px 0 28px;
+  border-bottom:1px solid var(--borde)
+}
+
+.encabezado-vista h1{
+  margin-bottom:12px;
+  font-size:clamp(35px,4vw,54px)
+}
+
+.encabezado-vista p{
+  max-width:650px;
+  margin:0;
+  font-size:14px
+}
+
+.contenido-vista{padding:30px 0 60px}
+
+.aviso{
+  padding:13px 16px;
+  border-left:3px solid #7f9f67;
+  background:var(--verde-suave);
+  color:#374238;
+  font-size:11px
+}
+
+/* Filtros */
+
+.filtros{
+  display:grid;
+  grid-template-columns:1.8fr 1fr 1.15fr auto;
+  align-items:end;
+  gap:12px;
+  padding:18px;
+  margin:25px 0 20px;
+  border:1px solid var(--borde);
+  border-radius:8px;
+  background:var(--verde-suave)
+}
+
+.filtros>div{min-width:0}
+
+.filtros label{
+  display:block;
+  font-size:10px;
+  font-weight:700
+}
+
+.filtros input,
+.filtros select{
+  width:100%;
+  min-width:0;
+  min-height:45px;
+  margin-top:6px;
+  padding:10px;
+  border:1px solid #d2ddce;
+  border-radius:5px;
+  background:#fff;
+  color:var(--texto);
+  font-size:12px
+}
+
+.herramientas{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin:20px 0
+}
+
+.categorias{
+  display:flex;
+  gap:7px
+}
+
+.categoria{
+  min-height:36px;
+  padding:7px 15px;
+  border:1px solid var(--borde);
+  border-radius:20px;
+  background:#fff;
+  font-size:11px
+}
+
+.categoria.seleccionada{
+  border-color:var(--verde-oscuro);
+  background:var(--verde-oscuro);
+  color:#fff
+}
+
+#contador{
+  color:var(--secundario);
+  font-size:11px
+}
+
+/* Tarjetas */
+
+.rejilla{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px
+}
+
+.tarjeta{
+  overflow:hidden;
+  border:1px solid var(--borde);
+  border-radius:8px;
+  background:#fff;
+  transition:transform .2s
+}
+
+.tarjeta:hover{transform:translateY(-3px)}
+
+.ilustracion{
+  position:relative;
+  height:150px;
+  display:grid;
+  place-items:center;
+  background:var(--verde-claro)
+}
+
+.tarjeta:nth-child(even) .ilustracion{background:#f3f6ee}
+
+.ilustracion svg{
+  width:122px;
+  height:122px;
+  color:var(--verde)
+}
+
+.ejemplo{
+  position:absolute;
+  top:11px;
+  left:11px;
+  padding:3px 7px;
+  border:1px solid var(--borde);
+  border-radius:3px;
+  background:#fff;
+  font-size:8px
+}
+
+.tarjeta-info{padding:18px}
+.tarjeta-info h3{margin-bottom:7px}
+
+.tarjeta-info p{
+  margin-bottom:13px;
+  font-size:11px
+}
+
+.dato{
+  padding-top:12px;
+  border-top:1px solid var(--borde)
+}
+
+.ver-detalle{
+  display:flex;
+  justify-content:space-between;
+  width:100%;
+  min-height:34px;
+  padding:0;
+  border:0;
+  background:none;
+  color:var(--verde);
+  font-size:12px;
+  font-weight:700
+}
+
+.sin-resultados{
+  padding:35px;
+  background:var(--verde-claro);
+  text-align:center
+}
+
+/* Sodas ficticias */
+
+.soda{padding:22px}
+
+.soda-superior{
+  display:flex;
+  justify-content:space-between
+}
+
+.icono-soda{
+  width:48px;
+  height:48px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:var(--verde-claro);
+  color:var(--verde);
+  font-size:23px
+}
+
+.soda h3{margin:18px 0 6px}
+.soda p{font-size:12px}
+
+.soda ul{
+  margin:16px 0 0;
+  padding:15px 0 0;
+  border-top:1px solid var(--borde);
+  list-style:none;
+  color:var(--secundario);
+  font-size:11px
+}
+
+.soda li+li{margin-top:6px}
+
+/* Funcionamiento y proyecto */
+
+.pasos,
+.columnas{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:28px
+}
+
+.pasos article{
+  padding-top:18px;
+  border-top:1px solid #bdd0b4
+}
+
+.numero{
+  display:block;
+  margin-bottom:18px;
+  color:var(--verde);
+  font-size:13px
+}
+
+.pasos p,
+.columnas p{font-size:13px}
+
+.columnas article{
+  padding:23px;
+  border:1px solid var(--borde);
+  border-radius:7px;
+  background:var(--verde-suave)
+}
+
+.columnas h3{font-size:17px}
+
+/* Semillita */
+
+.presentacion-semillita{
+  display:grid;
+  grid-template-columns:.8fr 1.2fr;
+  gap:45px;
+  align-items:center;
+  max-width:900px;
+  margin:auto;
+  padding:25px 0
+}
+
+.robot-grande{
+  min-height:300px;
+  display:grid;
+  place-items:center;
+  border-radius:10px;
+  background:var(--verde-claro)
+}
+
+.robot-grande svg{
+  width:145px;
+  height:145px;
+  color:var(--verde)
+}
+
+.presentacion-semillita p{font-size:14px}
+.aclaracion{font-size:11px!important}
+
+/* Pie */
+
+footer{
+  padding:35px 40px 20px;
+  border-top:1px solid var(--borde)
+}
+
+.footer-columnas{
+  display:grid;
+  grid-template-columns:1fr 1fr 1.2fr;
+  gap:30px;
+  font-size:11px
+}
+
+.footer-logo{
+  padding:0;
+  border:0;
+  background:none;
+  color:var(--verde);
+  font-size:22px;
+  font-weight:700;
+  letter-spacing:-1px
+}
+
+.footer-columnas strong{
+  display:block;
+  margin-bottom:10px
+}
+
+.footer-columnas p{margin:0}
+
+.footer-final{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  margin-top:24px;
+  padding:18px 0 55px;
+  border-top:1px solid var(--borde);
+  color:var(--secundario);
+  font-size:9px
+}
+
+/* Ventana de Semillita */
+
+.abrir-bot{
+  position:fixed;
+  right:22px;
+  bottom:20px;
+  z-index:60;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:9px 17px 9px 10px;
+  border:1px solid #fff;
+  border-radius:35px;
+  background:var(--verde-oscuro);
+  color:#fff;
+  box-shadow:0 5px 25px #173d2926;
+  font-size:12px
+}
+
+.abrir-bot svg{
+  width:35px;
+  height:35px
+}
+
+.bot{
+  position:fixed;
+  right:22px;
+  bottom:88px;
+  z-index:70;
+  width:360px;
+  max-width:calc(100vw - 32px);
+  overflow:hidden;
+  border:1px solid var(--borde);
+  border-radius:12px;
+  background:#fff;
+  box-shadow:0 15px 55px #173d2926
+}
+
+.bot header{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px;
+  background:var(--verde-claro)
+}
+
+.bot header svg{
+  width:38px;
+  height:38px;
+  color:var(--verde)
+}
+
+.bot header small{
+  display:block;
+  font-size:9px
+}
+
+.cerrar{
+  width:42px;
+  height:42px;
+  margin-left:auto;
+  border:0;
+  background:none;
+  color:var(--verde-oscuro);
+  font-size:25px
+}
+
+.bot-cuerpo{
+  max-height:58vh;
+  padding:16px;
+  overflow:auto
+}
+
+.respuesta{
+  padding:14px;
+  border-radius:0 10px 10px 10px;
+  background:var(--verde-suave);
+  font-size:12px
+}
+
+.opciones-bot{
+  display:grid;
+  gap:7px
+}
+
+.opciones-bot button{
+  padding:10px;
+  border:1px solid var(--borde);
+  border-radius:5px;
+  background:#fff;
+  color:var(--verde);
+  text-align:left;
+  font-size:11px
+}
+
+.opciones-bot button:hover{background:var(--verde-claro)}
+
+/* Ficha del producto */
+
+dialog{
+  width:calc(100% - 32px);
+  max-width:510px;
+  padding:30px;
+  border:1px solid var(--borde);
+  border-radius:12px;
+  color:var(--texto)
+}
+
+dialog::backdrop{background:#10291bb3}
+
+.cerrar-dialogo{
+  float:right;
+  border:0;
+  background:none;
+  color:var(--verde-oscuro);
+  font-size:25px
+}
+
+dialog p,
+dialog dl{font-size:13px}
+
+dt{font-weight:700}
+
+dd{
+  margin:0 0 12px;
+  color:var(--secundario)
+}
+
+/* Adaptación */
+
+@media(max-width:1100px){
+  :root{--lateral:215px}
+
+  .sidebar{padding:30px 16px}
+  .logo{font-size:30px}
+  main{padding:0 28px}
+  .barra-superior{margin:0 28px}
+  .portada{gap:22px}
+  .foto-portada{height:370px}
+  .filtros{grid-template-columns:1.4fr 1fr}
+  .rejilla{grid-template-columns:repeat(2,minmax(0,1fr))}
+
+  footer{
+    padding-left:28px;
+    padding-right:28px
+  }
+}
+
+@media(max-width:780px){
+  .sidebar{
+    width:245px;
+    box-shadow:10px 0 35px #173d2920
+  }
+
+  .sidebar:not(.abierto-movil){
+    transform:translateX(-100%);
+    visibility:hidden
+  }
+
+  .pagina,
+  .menu-oculto .pagina{margin-left:0}
+
+  .barra-superior{
+    min-height:64px;
+    margin:0 18px
+  }
+
+  main{padding:0 20px}
+
+  .portada{
+    grid-template-columns:1fr;
+    min-height:auto;
+    padding:30px 0 45px
+  }
+
+  .foto-portada{height:270px}
+
+  .encabezado-vista{
+    align-items:flex-start;
+    padding-top:38px
+  }
+
+  .encabezado-vista .planta{
+    width:45px;
+    flex-shrink:0
+  }
+
+  .pasos,
+  .columnas{
+    grid-template-columns:1fr;
+    gap:20px
+  }
+
+  .presentacion-semillita{
+    grid-template-columns:1fr;
+    gap:25px
+  }
+
+  .robot-grande{min-height:210px}
+
+  .robot-grande svg{
+    width:110px;
+    height:110px
+  }
+
+  .footer-columnas{
+    grid-template-columns:1fr;
+    gap:20px
+  }
+
+  footer{
+    padding-left:20px;
+    padding-right:20px
+  }
+}
+
+@media(max-width:560px){
+  h1{font-size:43px}
+
+  .seccion-actual{
+    max-width:120px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap
+  }
+
+  .estado{font-size:8px}
+  .foto-portada{height:245px}
+
+  .leyenda-foto{
+    right:12px;
+    bottom:12px;
+    left:12px
+  }
+
+  .filtros{
+    padding:13px;
+    gap:10px
+  }
+
+  .filtro-busqueda,
+  .filtros>.boton{
+    grid-column:1/-1
+  }
+
+  .herramientas{
+    align-items:flex-start;
+    flex-direction:column
+  }
+
+  .rejilla{grid-template-columns:1fr}
+  .categorias{flex-wrap:wrap}
+  .footer-final{flex-direction:column}
+
+  .abrir-bot{
+    right:15px;
+    bottom:15px
+  }
+
+  .bot{
+    right:15px;
+    bottom:82px
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  *{
+    animation:none!important;
+    transition:none!important
+  }
+}
+</style>
 </head>
 
 <body>
-  <a class="skip" href="#contenido">Saltar al contenido</a>
 
-  <svg class="simbolos" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <symbol id="planta" viewBox="0 0 80 80">
-      <path d="M40 70V36M40 49C11 49 10 26 10 21c24-1 31 12 30 28ZM40 36C39 12 60 9 69 10c0 18-10 27-29 26Z"
-        fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-    </symbol>
-    <symbol id="robot" viewBox="0 0 64 64">
-      <path d="M32 16V7m-4 0h8" fill="none" stroke="currentColor" stroke-width="3"/>
-      <rect x="11" y="17" width="42" height="34" rx="12" fill="currentColor"/>
-      <circle cx="24" cy="31" r="3" fill="white"/>
-      <circle cx="40" cy="31" r="3" fill="white"/>
-      <path d="M25 41q7 6 14 0" fill="none" stroke="white" stroke-width="2"/>
-      <path d="M7 28v12m50-12v12" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
-    </symbol>
-  </svg>
+<svg class="simbolos" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <symbol id="planta" viewBox="0 0 80 80">
+    <path d="M40 70V36M40 49C11 49 10 26 10 21c24-1 31 12 30 28ZM40 36C39 12 60 9 69 10c0 18-10 27-29 26Z"
+      fill="none" stroke="currentColor" stroke-width="3"
+      stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
 
-  <aside class="sidebar" id="sidebar">
-    <a href="#inicio" class="logo" aria-label="Cosecha Libre, inicio">
-      <svg aria-hidden="true"><use href="#planta"/></svg>
-      <span>Cosecha<em>libre.</em></span>
-    </a>
+  <symbol id="robot" viewBox="0 0 64 64">
+    <path d="M32 16V7m-4 0h8" fill="none" stroke="currentColor" stroke-width="3"/>
+    <rect x="11" y="17" width="42" height="34" rx="12" fill="currentColor"/>
+    <circle cx="24" cy="31" r="3" fill="white"/>
+    <circle cx="40" cy="31" r="3" fill="white"/>
+    <path d="M25 41q7 6 14 0" fill="none" stroke="white" stroke-width="2"/>
+    <path d="M7 28v12m50-12v12" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+  </symbol>
+</svg>
 
-    <p class="lema">DEL CAMPO, MÁS CERCA</p>
+<aside class="sidebar" id="sidebar">
+  <button class="logo" data-vista="inicio" aria-label="Ir al inicio">
+    <svg aria-hidden="true"><use href="#planta"/></svg>
+    <span>Cosecha<em>libre.</em></span>
+  </button>
 
-    <nav aria-label="Navegación principal">
-      <a href="#inicio" class="activo"><span aria-hidden="true">⌂</span>Inicio</a>
-      <a href="#explorar"><span aria-hidden="true">⌕</span>Explorar cosechas</a>
-      <a href="#comunidad"><span aria-hidden="true">◎</span>Zonas y comunidad</a>
-      <a href="#como-funciona"><span aria-hidden="true">↗</span>Cómo funciona</a>
-      <a href="#proyecto"><span aria-hidden="true">♧</span>El proyecto</a>
-      <a href="#preguntas"><span aria-hidden="true">?</span>Preguntas frecuentes</a>
-    </nav>
+  <p class="lema">DEL CAMPO, MÁS CERCA</p>
 
-    <div class="sidebar-pie">
-      <svg class="planta" aria-hidden="true"><use href="#planta"/></svg>
-      <strong>Una idea que crece<br>desde lo local.</strong>
-      <p>Conectemos a quienes cultivan con quienes compran.</p>
-      <span class="etiqueta">PROTOTIPO · COSTA RICA</span>
-    </div>
-  </aside>
+  <nav class="menu" aria-label="Menú principal">
+    <button class="activo" data-vista="inicio">
+      <span aria-hidden="true">⌂</span>Inicio
+    </button>
 
-  <div class="pagina">
-    <header class="barra-superior">
-      <a href="#inicio" class="marca-movil">Cosecha libre.</a>
-      <span class="ruta">Comunidad <span>/</span> Cosecha Libre</span>
-      <span class="estado">Proyecto en desarrollo</span>
-      <button id="abrir-menu" class="boton-icono"
-        aria-label="Abrir menú" aria-expanded="false" aria-controls="sidebar">☰</button>
-    </header>
+    <button data-vista="explorar">
+      <span aria-hidden="true">⌕</span>Explorar cosechas
+    </button>
 
-    <main id="contenido">
-      <section class="portada" id="inicio">
+    <button data-vista="sodas">
+      <span aria-hidden="true">▣</span>Sodas del prototipo
+    </button>
+
+    <button data-vista="funciona">
+      <span aria-hidden="true">↗</span>Cómo funciona
+    </button>
+
+    <button data-vista="proyecto">
+      <span aria-hidden="true">♧</span>El proyecto
+    </button>
+
+    <button data-vista="semillita">
+      <span aria-hidden="true">?</span>Conozca a Semillita
+    </button>
+  </nav>
+
+  <div class="sidebar-pie">
+    <svg class="planta" aria-hidden="true"><use href="#planta"/></svg>
+    <strong>Una idea que crece<br>desde lo local.</strong>
+    <p>Conectemos a quienes cultivan con quienes compran.</p>
+    <span class="etiqueta">PROTOTIPO · COSTA RICA</span>
+  </div>
+</aside>
+
+<div class="pagina">
+  <header class="barra-superior">
+    <button
+      class="alternar-menu"
+      id="alternar-menu"
+      aria-label="Ocultar menú"
+      aria-expanded="true"
+      aria-controls="sidebar">☰</button>
+
+    <span class="seccion-actual" id="seccion-actual">Inicio</span>
+    <span class="estado">Proyecto en desarrollo</span>
+  </header>
+
+  <main>
+
+    <!-- INICIO -->
+
+    <section class="vista activa" id="vista-inicio">
+      <div class="portada">
         <div>
           <span class="sobre-titulo">SEMBRAMOS CONEXIONES</span>
           <h1>Lo que crece cerca,<br>nos conecta.</h1>
-          <p>Una nueva forma de acercar las próximas cosechas a las sodas, los restaurantes y las familias de la comunidad.</p>
+
+          <p>
+            Una propuesta para acercar las próximas cosechas a las sodas,
+            los restaurantes y las familias de una comunidad.
+          </p>
 
           <div class="acciones">
-            <a href="#explorar" class="boton">Explorar la idea <span>↗</span></a>
-            <a href="#como-funciona" class="enlace">¿Cómo funcionaría? →</a>
+            <button class="boton" data-vista="explorar">
+              Explorar la idea ↗
+            </button>
+
+            <button class="enlace" data-vista="funciona">
+              ¿Cómo funcionaría? →
+            </button>
           </div>
 
-          <p class="nota">◎ Reservas antes de la cosecha · Encuentros por cantón</p>
+          <p class="nota">
+            ◎ Reservas antes de la cosecha · Encuentros por cantón
+          </p>
         </div>
 
         <div class="foto-portada">
-          <img src="portada.png"
-            alt="Pequeña planta en tierra con montañas verdes al fondo"
-            width="1024" height="683">
+          <img
+            src="portada.png"
+            alt="Pequeña planta en tierra con montañas verdes al fondo">
 
           <div class="leyenda-foto">
             <svg aria-hidden="true"><use href="#planta"/></svg>
+
             <div>
               <strong>De una semilla,<br>una conexión.</strong>
               <small>El futuro también se cultiva cerca.</small>
             </div>
           </div>
         </div>
-      </section>
-
-      <div class="aviso">
-        <strong>Está explorando una demostración.</strong>
-        Los productos y escenarios son ilustrativos. Todavía no hay productores registrados, ofertas verificadas ni reservas reales.
       </div>
+    </section>
 
-      <section class="seccion" id="explorar">
-        <div class="encabezado-seccion">
-          <div>
-            <span class="sobre-titulo">EXPLORAR COSECHAS</span>
-            <h2>¿Qué busca para su próxima mesa?</h2>
-          </div>
-          <svg class="planta" aria-hidden="true"><use href="#planta"/></svg>
+    <!-- COSECHAS -->
+
+    <section class="vista" id="vista-explorar" hidden>
+      <header class="encabezado-vista">
+        <div>
+          <span class="sobre-titulo">EXPLORAR COSECHAS</span>
+          <h1>¿Qué busca para su próxima mesa?</h1>
+
+          <p>
+            Use los filtros para probar cómo podrían encontrarse productos
+            por zona y tipo de comprador.
+          </p>
         </div>
 
-        <p class="introduccion">Pruebe los filtros para descubrir cómo podría encontrar productos por zona y tipo de comprador.</p>
+        <svg class="planta" aria-hidden="true"><use href="#planta"/></svg>
+      </header>
+
+      <div class="contenido-vista">
+        <div class="aviso">
+          <strong>Demostración:</strong> estos productos no corresponden a
+          ofertas reales. Las zonas, fechas y cantidades deberán confirmarse
+          durante un futuro piloto.
+        </div>
 
         <form class="filtros" id="formulario-busqueda">
           <div class="filtro-busqueda">
             <label for="busqueda">Producto o palabra clave</label>
-            <input type="search" id="busqueda"
-              placeholder="Lechuga, Cartago, sodas…" autocomplete="off">
+            <input
+              id="busqueda"
+              type="search"
+              placeholder="Lechuga, Cartago, sodas…"
+              autocomplete="off">
           </div>
 
           <div>
             <label for="zona">Zona</label>
             <select id="zona">
-              <option value="">Todas las zonas</option>
+              <option value="">Todas</option>
               <option>Cartago</option>
               <option>Alajuela</option>
               <option>San José</option>
@@ -601,9 +1128,9 @@
           </div>
 
           <div>
-            <label for="comprador">Tipo de comprador</label>
+            <label for="comprador">Comprador</label>
             <select id="comprador">
-              <option value="">Todos los compradores</option>
+              <option value="">Todos</option>
               <option value="sodas">Sodas</option>
               <option value="restaurantes">Restaurantes</option>
               <option value="familias">Familias</option>
@@ -615,510 +1142,965 @@
 
         <div class="herramientas">
           <div class="categorias" role="group" aria-label="Filtrar por categoría">
-            <button class="categoria seleccionada" data-categoria="" aria-pressed="true">Todo</button>
-            <button class="categoria" data-categoria="Hortalizas" aria-pressed="false">Hortalizas</button>
-            <button class="categoria" data-categoria="Hierbas" aria-pressed="false">Hierbas</button>
+            <button
+              class="categoria seleccionada"
+              type="button"
+              data-categoria=""
+              aria-pressed="true">Todo</button>
+
+            <button
+              class="categoria"
+              type="button"
+              data-categoria="Hortalizas"
+              aria-pressed="false">Hortalizas</button>
+
+            <button
+              class="categoria"
+              type="button"
+              data-categoria="Hierbas"
+              aria-pressed="false">Hierbas</button>
           </div>
+
           <span id="contador" role="status"></span>
         </div>
 
-        <div class="productos" id="productos"></div>
+        <div class="rejilla" id="productos"></div>
 
-        <div class="vacio" id="sin-resultados" hidden>
-          <h3>Por aquí todavía no hay coincidencias.</h3>
-          <p>Pruebe con otra palabra o elimine los filtros.</p>
-          <button class="boton secundario" id="restablecer">Restablecer filtros</button>
+        <div class="sin-resultados" id="sin-resultados" hidden>
+          <h3>No encontramos coincidencias.</h3>
+          <p>Pruebe otra palabra o elimine los filtros.</p>
+
+          <button
+            class="boton secundario"
+            id="restablecer"
+            type="button">Restablecer</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SODAS FICTICIAS -->
+
+    <section class="vista" id="vista-sodas" hidden>
+      <header class="encabezado-vista">
+        <div>
+          <span class="sobre-titulo">COMPRADORES DE EJEMPLO</span>
+          <h1>Sodas que podrían comprar cerca.</h1>
+
+          <p>
+            Estas sodas fueron inventadas únicamente para mostrar cómo
+            se vería un directorio de compradores.
+          </p>
         </div>
 
-        <noscript>
-          <p>Active JavaScript para probar el catálogo y el asistente. Este sitio es una demostración y no contiene ofertas reales.</p>
-        </noscript>
-      </section>
+        <svg class="planta" aria-hidden="true"><use href="#planta"/></svg>
+      </header>
 
-      <section class="seccion" id="como-funciona">
-        <span class="sobre-titulo">SENCILLO, DESDE EL PRINCIPIO</span>
-        <h2>Del cultivo a una conversación.</h2>
+      <div class="contenido-vista">
+        <div class="aviso">
+          <strong>Nombres ficticios:</strong> ninguna de estas sodas está
+          registrada ni representa un negocio identificado.
+        </div>
 
+        <div class="rejilla" style="margin-top:25px">
+
+          <article class="tarjeta soda">
+            <div class="soda-superior">
+              <span class="etiqueta">EJEMPLO FICTICIO</span>
+              <span class="icono-soda" aria-hidden="true">⌂</span>
+            </div>
+
+            <h3>Soda La Huerta Verde</h3>
+
+            <p>
+              Escenario de una soda interesada en explorar hortalizas
+              para sus menús semanales.
+            </p>
+
+            <ul>
+              <li>◎ Zona ilustrativa: Cartago</li>
+              <li>Interés de ejemplo: lechuga y culantro</li>
+              <li>Contacto: no disponible</li>
+            </ul>
+          </article>
+
+          <article class="tarjeta soda">
+            <div class="soda-superior">
+              <span class="etiqueta">EJEMPLO FICTICIO</span>
+              <span class="icono-soda" aria-hidden="true">⌂</span>
+            </div>
+
+            <h3>Soda Sazón del Valle</h3>
+
+            <p>
+              Ejemplo de un comercio pequeño que podría consultar
+              cosechas cercanas antes de comprar.
+            </p>
+
+            <ul>
+              <li>◎ Zona ilustrativa: Alajuela</li>
+              <li>Interés de ejemplo: tomate y brócoli</li>
+              <li>Contacto: no disponible</li>
+            </ul>
+          </article>
+
+          <article class="tarjeta soda">
+            <div class="soda-superior">
+              <span class="etiqueta">EJEMPLO FICTICIO</span>
+              <span class="icono-soda" aria-hidden="true">⌂</span>
+            </div>
+
+            <h3>Soda El Fogón de la Montaña</h3>
+
+            <p>
+              Escenario para mostrar una solicitud agrupada con
+              compradores del mismo cantón.
+            </p>
+
+            <ul>
+              <li>◎ Zona ilustrativa: San José</li>
+              <li>Interés de ejemplo: zanahoria y hierbas</li>
+              <li>Contacto: no disponible</li>
+            </ul>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CÓMO FUNCIONA -->
+
+    <section class="vista" id="vista-funciona" hidden>
+      <header class="encabezado-vista">
+        <div>
+          <span class="sobre-titulo">SENCILLO DESDE EL PRINCIPIO</span>
+          <h1>Del cultivo a una conversación.</h1>
+
+          <p>
+            El recorrido propone tres pasos y deja los acuerdos
+            comerciales en manos de las personas involucradas.
+          </p>
+        </div>
+
+        <svg class="planta" aria-hidden="true"><use href="#planta"/></svg>
+      </header>
+
+      <div class="contenido-vista">
         <div class="pasos">
           <article>
             <span class="numero">01</span>
-            <h3>Compartir la próxima cosecha</h3>
-            <p>El productor indicaría el producto, la cantidad estimada, la zona y la fecha prevista de cosecha.</p>
+            <h3>Compartir la cosecha</h3>
+
+            <p>
+              El productor indicaría el producto, la cantidad estimada,
+              la zona y la fecha prevista.
+            </p>
           </article>
+
           <article>
             <span class="numero">02</span>
             <h3>Encontrarse cerca</h3>
-            <p>El comprador exploraría cosechas por cantón y enviaría una solicitud anticipada.</p>
+
+            <p>
+              El comprador exploraría cosechas por cantón y enviaría
+              una solicitud anticipada.
+            </p>
           </article>
+
           <article>
             <span class="numero">03</span>
             <h3>Acordar directamente</h3>
-            <p>Ambas partes confirmarían disponibilidad, precio y entrega. Una solicitud no sería una venta garantizada.</p>
+
+            <p>
+              Ambas partes confirmarían disponibilidad, precio y entrega
+              antes de aceptar una reserva.
+            </p>
           </article>
         </div>
-      </section>
 
-      <section class="seccion comunidad" id="comunidad">
+        <div class="aviso" style="margin-top:30px">
+          El alcance inicial no incluye pagos, transporte ni comisiones.
+          Una solicitud tampoco garantiza una venta.
+        </div>
+      </div>
+    </section>
+
+    <!-- PROYECTO -->
+
+    <section class="vista" id="vista-proyecto" hidden>
+      <header class="encabezado-vista">
         <div>
-          <span class="sobre-titulo">LA COMUNIDAD ES EL PUNTO DE PARTIDA</span>
-          <h2>Un cantón.<br>Muchas posibilidades.</h2>
-          <p>La propuesta es comenzar en un solo cantón y explorar cómo agrupar solicitudes cercanas. El lugar del piloto se definirá después de conversar con productores y compradores.</p>
-          <p class="aclaracion">Las zonas del buscador son ejemplos de navegación, no cobertura disponible.</p>
-          <a href="#proyecto" class="enlace">Conozca el proyecto →</a>
+          <span class="sobre-titulo">CONOZCA COSECHA LIBRE</span>
+          <h1>Una idea para fortalecer el comercio agrícola local.</h1>
+
+          <p>
+            Cosecha Libre es una propuesta de web móvil para acercar
+            pequeños productores y compradores locales en Costa Rica.
+          </p>
         </div>
 
-        <div class="perfiles">
-          <article>
-            <span class="icono-perfil" aria-hidden="true">♧</span>
-            <h3>Productores</h3>
-            <p>Dar visibilidad a lo que viene en camino.</p>
-          </article>
-          <article>
-            <span class="icono-perfil" aria-hidden="true">⌂</span>
-            <h3>Sodas y restaurantes</h3>
-            <p>Explorar compras para su próxima semana.</p>
-          </article>
-          <article>
-            <span class="icono-perfil" aria-hidden="true">◎</span>
-            <h3>Familias</h3>
-            <p>Encontrar oportunidades de compra local.</p>
-          </article>
-          <article>
-            <span class="icono-perfil" aria-hidden="true">↗</span>
-            <h3>Organizaciones</h3>
-            <p>Acompañar la validación con la comunidad.</p>
-          </article>
-        </div>
-      </section>
+        <svg class="planta" aria-hidden="true"><use href="#planta"/></svg>
+      </header>
 
-      <section class="seccion proyecto" id="proyecto">
-        <span class="sobre-titulo">CONOZCA COSECHA LIBRE</span>
-        <h2>Más cercanía entre quien siembra<br>y quien lleva la cosecha a su mesa.</h2>
-        <p>Cosecha Libre es una idea de plataforma web móvil para facilitar el contacto entre pequeños productores agropecuarios y compradores locales en Costa Rica.</p>
-
+      <div class="contenido-vista">
         <div class="columnas">
           <article>
             <h3>Lo que queremos explorar</h3>
-            <p>Reservas antes de la cosecha y agrupación de solicitudes por cantón. Buscamos comprender si estas herramientas pueden facilitar la planificación y las relaciones comerciales locales.</p>
+
+            <p>
+              Reservas antes de la cosecha y agrupación de solicitudes
+              por cantón. Ambas ideas requieren validación con usuarios.
+            </p>
           </article>
+
           <article>
             <h3>En qué etapa estamos</h3>
-            <p>Este sitio es un prototipo de presentación. La investigación con usuarios, la factibilidad, el presupuesto y el piloto comercial están pendientes. Sus beneficios todavía deben validarse.</p>
-          </article>
-          <article>
-            <h3>Un primer paso posible</h3>
-            <p>Conversar con productores y sodas, probar un recorrido sencillo y medir acuerdos confirmados y entregas reales. El alcance propuesto no incluye pagos ni logística propia.</p>
-          </article>
-        </div>
-      </section>
 
-      <section class="seccion preguntas" id="preguntas">
-        <div>
-          <span class="sobre-titulo">CONVERSEMOS CLARO</span>
-          <h2>Antes de empezar,<br>resolvamos sus dudas.</h2>
-          <p>Semillita, nuestro asistente de respuestas programadas, también puede orientarle.</p>
-          <button class="boton secundario" id="preguntar-bot">Preguntarle a Semillita ↗</button>
-        </div>
-        <div id="lista-preguntas"></div>
-      </section>
-
-      <section class="contacto">
-        <div>
-          <span class="sobre-titulo">EL SIGUIENTE PASO ES CONECTARNOS</span>
-          <h2>Las buenas ideas se cultivan en comunidad.</h2>
-          <p>El canal de contacto se habilitará cuando comience una prueba real.</p>
-        </div>
-        <div>
-          <button class="boton" disabled aria-describedby="nota-whatsapp">◉ Conversar por WhatsApp</button>
-          <small id="nota-whatsapp">Próximamente · Botón de demostración</small>
-        </div>
-      </section>
-    </main>
-
-    <footer>
-      <div class="footer-columnas">
-        <div>
-          <a class="footer-logo" href="#inicio">Cosecha libre.</a>
-          <p>Del campo, más cerca.<br>Una idea para el comercio agrícola local.</p>
-        </div>
-        <div>
-          <strong>Explore</strong>
-          <a href="#explorar">Cosechas de ejemplo</a>
-          <a href="#como-funciona">Cómo funciona</a>
-          <a href="#proyecto">Sobre el proyecto</a>
-        </div>
-        <div>
-          <strong>Información general</strong>
-          <p>Proyecto conceptual en Costa Rica.<br>Sin transacciones ni registro de usuarios.<br>Sin comisión prevista en el alcance inicial.</p>
-        </div>
-        <div>
-          <strong>Transparencia</strong>
-          <p>Los filtros y el asistente funcionan en su navegador. Este prototipo no solicita datos personales ni envía sus consultas a un servidor de Cosecha Libre.</p>
-        </div>
-      </div>
-      <div class="footer-final">
-        <span>Cosecha Libre · Prototipo para una feria de innovación</span>
-        <span>Diseñado para crecer con la comunidad ↗</span>
-      </div>
-    </footer>
-  </div>
-
-  <button class="abrir-bot" id="abrir-bot"
-    aria-label="Abrir asistente Semillita" aria-expanded="false" aria-controls="bot">
-    <svg aria-hidden="true"><use href="#robot"/></svg>
-    <span>¿Le ayudo?</span>
-  </button>
-
-  <section class="bot" id="bot" aria-label="Asistente Semillita" hidden>
-    <header>
-      <svg aria-hidden="true"><use href="#robot"/></svg>
-      <div>
-        <strong>Semillita</strong>
-        <small>Guía del proyecto · Respuestas programadas</small>
-      </div>
-      <button class="boton-icono" id="cerrar-bot" aria-label="Cerrar asistente">×</button>
-    </header>
-    <div class="bot-cuerpo">
-      <p class="respuesta" id="respuesta-bot" role="status">
-        ¡Hola! Soy Semillita. Elija una pregunta y exploremos esta idea juntos.
-        No soy un servicio de asesoría agronómica.
-      </p>
-      <div class="bot-opciones" id="bot-opciones"></div>
-    </div>
-  </section>
-
-  <dialog id="detalle" aria-labelledby="detalle-titulo">
-    <button class="boton-icono cerrar-detalle" aria-label="Cerrar detalle">×</button>
-    <span class="sobre-titulo">FICHA ILUSTRATIVA</span>
-    <h2 id="detalle-titulo"></h2>
-    <p id="detalle-descripcion"></p>
-
-    <dl>
-      <dt>Cantidad disponible</dt>
-      <dd>Por confirmar con un productor real</dd>
-      <dt>Fecha de cosecha</dt>
-      <dd>Por confirmar</dd>
-      <dt>Precio y entrega</dt>
-      <dd>Por acordar entre las partes</dd>
-    </dl>
-
-    <p class="aviso">Esta ficha explica el concepto. No es una oferta comercial y no permite reservar.</p>
-    <button class="boton" disabled>Reserva no disponible</button>
-  </dialog>
-
-  <script>
-    "use strict";
-
-    const $ = id => document.getElementById(id);
-
-    const normalizar = texto => texto
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase();
-
-    // Catálogo ilustrativo: no representa inventario ni cobertura real.
-    const productos = [
-      { nombre: "Lechuga", categoria: "Hortalizas", zona: "Cartago", compradores: ["sodas", "familias"], dibujo: "hoja" },
-      { nombre: "Tomate", categoria: "Hortalizas", zona: "Alajuela", compradores: ["sodas", "restaurantes"], dibujo: "tomate" },
-      { nombre: "Culantro", categoria: "Hierbas", zona: "San José", compradores: ["sodas", "familias", "restaurantes"], dibujo: "hierba" },
-      { nombre: "Zanahoria", categoria: "Hortalizas", zona: "Cartago", compradores: ["sodas", "restaurantes"], dibujo: "zanahoria" },
-      { nombre: "Brócoli", categoria: "Hortalizas", zona: "Alajuela", compradores: ["familias", "restaurantes"], dibujo: "brocoli" },
-      { nombre: "Albahaca", categoria: "Hierbas", zona: "San José", compradores: ["restaurantes", "familias"], dibujo: "hierba" }
-    ];
-
-    const dibujos = {
-      hoja: `
-        <path d="M60 104C12 91 18 56 31 53 15 27 45 14 58 28 77 3 103 26 95 46 123 58 99 94 60 104Z" fill="#aacb86"/>
-        <path d="M60 103V35m0 46L37 61m23 5 23-20m-23 4L45 36"/>`,
-      tomate: `
-        <path d="M61 41C20 19 11 67 28 89c17 22 60 21 73-3 16-29-6-54-40-45Z" fill="#a5c481"/>
-        <path d="m60 43-18-9 14-1 4-15 7 14 17-1-14 12m-10-3 2 15M33 66q-3 12 6 17"/>`,
-      hierba: `
-        <path d="m45 108 22-74m-9 28L38 49m15 31 28-15m-35 32L30 77"/>
-        <path d="M66 37C48 32 48 14 59 13c14-9 23 12 7 24ZM39 50C18 55 12 32 27 32c10-9 24 8 12 18ZM80 65C72 47 94 34 101 44c12 10-5 25-21 21ZM31 79C11 80 10 61 20 59c16-5 22 13 11 20Z" fill="#a5c481"/>`,
-      zanahoria: `
-        <path d="M41 42c8-10 29-8 33 1L34 111Z" fill="#b5cf91"/>
-        <path d="m55 38-8-23m13 22 7-26m-3 27 20-17M43 62l13 6m-18 9 10 5"/>`,
-      brocoli: `
-        <path d="m51 65-3 40h28L68 64" fill="#bed69c"/>
-        <path d="M35 72C9 72 12 47 27 43c-5-24 22-27 30-17 12-21 40-8 37 9 25 3 26 35 3 39-11 9-28 2-35-5-10 11-21 11-27 3Z" fill="#91b674"/>
-        <path d="m48 57 13 15 18-17"/>`
-    };
-
-    const preguntas = [
-      [
-        "¿Qué es Cosecha Libre?",
-        "Es una propuesta de web móvil para conectar pequeños productores agropecuarios con compradores locales en Costa Rica. Este sitio muestra el concepto; todavía no opera como mercado."
-      ],
-      [
-        "¿Puedo comprar o reservar ahora?",
-        "Todavía no. Las fichas son ejemplos y no hay inventario, precios ni fechas confirmadas. Una futura reserva requeriría aceptación del productor y acuerdo entre las partes."
-      ],
-      [
-        "¿Qué tiene de diferente la propuesta?",
-        "Queremos explorar solicitudes antes de la cosecha y agrupación por cantón. Es una combinación que debemos validar con usuarios; no afirmamos ser la primera plataforma en hacerlo."
-      ],
-      [
-        "¿Cómo participarían las sodas?",
-        "En una prueba futura, podrían buscar cosechas cercanas y expresar necesidades de compra. El precio, la cantidad, la calidad esperada y la entrega se acordarían con el productor."
-      ],
-      [
-        "¿La web cobra o hace entregas?",
-        "El alcance inicial propuesto no contempla comisión, pagos en línea ni logística propia. Este prototipo no permite transacciones."
-      ],
-      [
-        "¿Qué pasa si cambia una cosecha?",
-        "El flujo propuesto debería permitir actualizar la disponibilidad y avisar al comprador antes de confirmar una entrega. Las fechas estimadas no serían garantías."
-      ],
-      [
-        "¿Dónde estaría disponible?",
-        "El cantón del piloto aún no está definido. Cartago, Alajuela y San José aparecen únicamente como escenarios de navegación; no indican cobertura."
-      ],
-      [
-        "¿Cómo agruparían los pedidos?",
-        "La idea es identificar solicitudes cercanas dentro de un cantón. La forma de compartir datos, confirmar cantidades y coordinar entregas deberá validarse antes de operar."
-      ],
-      [
-        "¿Puedo consultar sobre plagas o fertilizantes?",
-        "Semillita solo explica esta propuesta. No diagnostica cultivos ni recomienda tratamientos. Para una situación concreta, busque orientación de un profesional agrónomo o de su agencia de extensión del MAG."
-      ],
-      [
-        "¿Guardan mis datos?",
-        "Este prototipo no tiene cuentas ni formularios de contacto. El buscador y estas preguntas se procesan en su navegador, sin enviarse a un servidor de Cosecha Libre. El proveedor de alojamiento puede tener sus propios registros técnicos."
-      ]
-    ];
-
-    let categoriaActual = "";
-
-    function mostrarProductos() {
-      const consulta = normalizar($("busqueda").value.trim());
-      const zona = $("zona").value;
-      const comprador = $("comprador").value;
-
-      const resultados = productos.filter(producto => {
-        const texto = normalizar([
-          producto.nombre,
-          producto.categoria,
-          producto.zona,
-          ...producto.compradores
-        ].join(" "));
-
-        return (!categoriaActual || producto.categoria === categoriaActual)
-          && (!zona || producto.zona === zona)
-          && (!comprador || producto.compradores.includes(comprador))
-          && texto.includes(consulta);
-      });
-
-      $("productos").replaceChildren();
-
-      resultados.forEach(producto => {
-        const tarjeta = document.createElement("article");
-        tarjeta.className = "tarjeta";
-
-        // Solo contiene datos fijos del catálogo; nunca entradas del visitante.
-        tarjeta.innerHTML = `
-          <div class="ilustracion">
-            <span class="ejemplo">EJEMPLO · SIN OFERTA REAL</span>
-            <svg viewBox="0 0 120 120" aria-hidden="true"
-              fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              ${dibujos[producto.dibujo]}
-            </svg>
-          </div>
-          <div class="tarjeta-info">
-            <h3>${producto.nombre}</h3>
-            <p>◎ ${producto.zona} · Zona ilustrativa</p>
-            <p class="disponibilidad">
-              ${producto.categoria}<br>
-              Fecha y cantidad por confirmar
+            <p>
+              Este sitio presenta el concepto. Todavía no existe un
+              mercado operativo ni un piloto comercial.
             </p>
-            <button class="ver-detalle" type="button"
-              aria-label="Ver ejemplo de ${producto.nombre}">
-              Ver ejemplo <span aria-hidden="true">↗</span>
+          </article>
+
+          <article>
+            <h3>El siguiente paso</h3>
+
+            <p>
+              Conversar con productores y sodas, probar un recorrido
+              sencillo y medir acuerdos junto con entregas reales.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEMILLITA -->
+
+    <section class="vista" id="vista-semillita" hidden>
+      <header class="encabezado-vista">
+        <div>
+          <span class="sobre-titulo">SU GUÍA EN EL PROTOTIPO</span>
+          <h1>Conozca a Semillita.</h1>
+
+          <p>
+            Un pequeño asistente programado para explicar la propuesta
+            de Cosecha Libre.
+          </p>
+        </div>
+
+        <svg class="planta" aria-hidden="true"><use href="#planta"/></svg>
+      </header>
+
+      <div class="contenido-vista">
+        <div class="presentacion-semillita">
+          <div class="robot-grande">
+            <svg aria-hidden="true"><use href="#robot"/></svg>
+          </div>
+
+          <div>
+            <span class="sobre-titulo">HOLA, SOY SEMILLITA</span>
+            <h2>Pregunte cuando lo necesite.</h2>
+
+            <p>
+              Semillita responde dudas sobre el funcionamiento,
+              el alcance y la etapa actual del proyecto.
+            </p>
+
+            <p class="aclaracion">
+              Sus respuestas están programadas. No utiliza inteligencia
+              artificial, no diagnostica cultivos y no brinda asesoría
+              agronómica.
+            </p>
+
+            <button class="boton" id="preguntar-semillita">
+              Abrir a Semillita ↗
             </button>
           </div>
-        `;
+        </div>
+      </div>
+    </section>
 
-        tarjeta.querySelector("button").addEventListener("click", () => {
-          $("detalle-titulo").textContent = producto.nombre;
-          $("detalle-descripcion").textContent =
-            `Escenario ilustrativo en ${producto.zona} para ${producto.compradores.join(", ")}. No corresponde a un productor registrado.`;
-          $("detalle").showModal();
-        });
+  </main>
 
-        $("productos").append(tarjeta);
+  <footer>
+    <div class="footer-columnas">
+      <div>
+        <button class="footer-logo" data-vista="inicio">
+          Cosecha libre.
+        </button>
+
+        <p>
+          Del campo, más cerca.<br>
+          Una idea para el comercio agrícola local.
+        </p>
+      </div>
+
+      <div>
+        <strong>Información general</strong>
+
+        <p>
+          Proyecto conceptual en Costa Rica.<br>
+          Sin transacciones ni usuarios registrados.<br>
+          Sin comisión prevista en la etapa inicial.
+        </p>
+      </div>
+
+      <div>
+        <strong>Transparencia</strong>
+
+        <p>
+          Los productos, las zonas y las sodas son ejemplos del prototipo.
+          El sitio no solicita datos personales.
+        </p>
+      </div>
+    </div>
+
+    <div class="footer-final">
+      <span>Cosecha Libre · Prototipo para una feria de innovación</span>
+      <span>Diseñado para crecer con la comunidad</span>
+    </div>
+  </footer>
+</div>
+
+<!-- BOTÓN DE SEMILLITA -->
+
+<button
+  class="abrir-bot"
+  id="abrir-bot"
+  aria-label="Abrir asistente Semillita"
+  aria-expanded="false">
+
+  <svg aria-hidden="true"><use href="#robot"/></svg>
+  <span>¿Le ayudo?</span>
+</button>
+
+<section class="bot" id="bot" aria-label="Asistente Semillita" hidden>
+  <header>
+    <svg aria-hidden="true"><use href="#robot"/></svg>
+
+    <div>
+      <strong>Semillita</strong>
+      <small>Respuestas programadas sobre el proyecto</small>
+    </div>
+
+    <button class="cerrar" id="cerrar-bot" aria-label="Cerrar">
+      ×
+    </button>
+  </header>
+
+  <div class="bot-cuerpo">
+    <p class="respuesta" id="respuesta-bot" role="status">
+      ¡Hola! Elija una pregunta y le explicaré lo que sabemos hasta ahora.
+    </p>
+
+    <div class="opciones-bot" id="opciones-bot"></div>
+  </div>
+</section>
+
+<!-- DETALLE DEL PRODUCTO -->
+
+<dialog id="dialogo">
+  <button class="cerrar-dialogo" aria-label="Cerrar">×</button>
+
+  <span class="sobre-titulo">FICHA ILUSTRATIVA</span>
+  <h2 id="dialogo-titulo"></h2>
+  <p id="dialogo-descripcion"></p>
+
+  <dl>
+    <dt>Cantidad</dt>
+    <dd>Por confirmar</dd>
+
+    <dt>Fecha de cosecha</dt>
+    <dd>Por confirmar</dd>
+
+    <dt>Precio y entrega</dt>
+    <dd>Por acordar entre las partes</dd>
+  </dl>
+
+  <p class="aviso">
+    Esta ficha no constituye una oferta comercial.
+  </p>
+
+  <button class="boton" disabled>Reserva no disponible</button>
+</dialog>
+
+<script>
+"use strict";
+
+const $ = id => document.getElementById(id);
+
+const esMovil = () =>
+  window.matchMedia("(max-width:780px)").matches;
+
+const normalizar = texto =>
+  texto
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+
+/* NAVEGACIÓN ENTRE APARTADOS */
+
+const titulos = {
+  inicio: "Inicio",
+  explorar: "Explorar cosechas",
+  sodas: "Sodas del prototipo",
+  funciona: "Cómo funciona",
+  proyecto: "El proyecto",
+  semillita: "Conozca a Semillita"
+};
+
+function mostrarVista(nombre, actualizarHistorial = true) {
+  if (!titulos[nombre]) nombre = "inicio";
+
+  document.querySelectorAll(".vista").forEach(vista => {
+    const activa = vista.id === `vista-${nombre}`;
+
+    vista.classList.toggle("activa", activa);
+    vista.hidden = !activa;
+  });
+
+  document.querySelectorAll(".menu [data-vista]").forEach(boton => {
+    const activo = boton.dataset.vista === nombre;
+
+    boton.classList.toggle("activo", activo);
+
+    if (activo) {
+      boton.setAttribute("aria-current", "page");
+    } else {
+      boton.removeAttribute("aria-current");
+    }
+  });
+
+  $("seccion-actual").textContent = titulos[nombre];
+  document.title = `Cosecha Libre · ${titulos[nombre]}`;
+
+  if (actualizarHistorial) {
+    history.pushState(
+      { vista: nombre },
+      "",
+      `#${nombre}`
+    );
+  }
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+  if (esMovil()) cerrarMenuMovil();
+}
+
+document.querySelectorAll("[data-vista]").forEach(boton => {
+  boton.addEventListener("click", () => {
+    mostrarVista(boton.dataset.vista);
+  });
+});
+
+/* MOSTRAR Y OCULTAR MENÚ */
+
+function actualizarBotonMenu(abierto) {
+  $("alternar-menu").setAttribute(
+    "aria-expanded",
+    String(abierto)
+  );
+
+  $("alternar-menu").setAttribute(
+    "aria-label",
+    abierto ? "Ocultar menú" : "Mostrar menú"
+  );
+}
+
+function cerrarMenuMovil() {
+  $("sidebar").classList.remove("abierto-movil");
+  actualizarBotonMenu(false);
+}
+
+$("alternar-menu").addEventListener("click", () => {
+  if (esMovil()) {
+    const abrir =
+      !$("sidebar").classList.contains("abierto-movil");
+
+    $("sidebar").classList.toggle(
+      "abierto-movil",
+      abrir
+    );
+
+    actualizarBotonMenu(abrir);
+  } else {
+    const ocultar =
+      !document.body.classList.contains("menu-oculto");
+
+    document.body.classList.toggle(
+      "menu-oculto",
+      ocultar
+    );
+
+    actualizarBotonMenu(!ocultar);
+  }
+});
+
+document.addEventListener("click", evento => {
+  if (!esMovil()) return;
+
+  if (!$("sidebar").classList.contains("abierto-movil")) {
+    return;
+  }
+
+  const clicEnMenu =
+    $("sidebar").contains(evento.target);
+
+  const clicEnBoton =
+    $("alternar-menu").contains(evento.target);
+
+  if (!clicEnMenu && !clicEnBoton) {
+    cerrarMenuMovil();
+  }
+});
+
+window.addEventListener("popstate", () => {
+  mostrarVista(
+    location.hash.slice(1) || "inicio",
+    false
+  );
+});
+
+/* PRODUCTOS ILUSTRATIVOS */
+
+const productos = [
+  {
+    nombre: "Lechuga",
+    categoria: "Hortalizas",
+    zona: "Cartago",
+    compradores: ["sodas", "familias"],
+    dibujo: "hoja"
+  },
+  {
+    nombre: "Tomate",
+    categoria: "Hortalizas",
+    zona: "Alajuela",
+    compradores: ["sodas", "restaurantes"],
+    dibujo: "tomate"
+  },
+  {
+    nombre: "Culantro",
+    categoria: "Hierbas",
+    zona: "San José",
+    compradores: ["sodas", "familias", "restaurantes"],
+    dibujo: "hierba"
+  },
+  {
+    nombre: "Zanahoria",
+    categoria: "Hortalizas",
+    zona: "Cartago",
+    compradores: ["sodas", "restaurantes"],
+    dibujo: "zanahoria"
+  },
+  {
+    nombre: "Brócoli",
+    categoria: "Hortalizas",
+    zona: "Alajuela",
+    compradores: ["familias", "restaurantes"],
+    dibujo: "brocoli"
+  },
+  {
+    nombre: "Albahaca",
+    categoria: "Hierbas",
+    zona: "San José",
+    compradores: ["restaurantes", "familias"],
+    dibujo: "hierba"
+  }
+];
+
+const dibujos = {
+  hoja: `
+    <path
+      d="M60 104C12 91 18 56 31 53 15 27 45 14
+      58 28 77 3 103 26 95 46 123 58 99 94 60 104Z"
+      fill="#aacb86"/>
+    <path
+      d="M60 103V35m0 46L37 61m23 5
+      23-20m-23 4L45 36"/>`,
+
+  tomate: `
+    <path
+      d="M61 41C20 19 11 67 28 89c17 22
+      60 21 73-3 16-29-6-54-40-45Z"
+      fill="#a5c481"/>
+    <path
+      d="m60 43-18-9 14-1 4-15 7 14
+      17-1-14 12"/>`,
+
+  hierba: `
+    <path
+      d="m45 108 22-74m-9 28L38 49
+      m15 31 28-15m-35 32L30 77"/>
+    <path
+      d="M66 37C48 32 48 14 59 13c14-9
+      23 12 7 24ZM39 50C18 55 12 32 27 32
+      c10-9 24 8 12 18ZM80 65C72 47 94 34
+      101 44c12 10-5 25-21 21Z"
+      fill="#a5c481"/>`,
+
+  zanahoria: `
+    <path
+      d="M41 42c8-10 29-8 33 1L34 111Z"
+      fill="#b5cf91"/>
+    <path
+      d="m55 38-8-23m13 22 7-26m-3 27
+      20-17"/>`,
+
+  brocoli: `
+    <path
+      d="m51 65-3 40h28L68 64"
+      fill="#bed69c"/>
+    <path
+      d="M35 72C9 72 12 47 27 43c-5-24
+      22-27 30-17 12-21 40-8 37 9
+      25 3 26 35 3 39-11 9-28 2-35-5
+      -10 11-21 11-27 3Z"
+      fill="#91b674"/>`
+};
+
+let categoriaActual = "";
+
+function mostrarProductos() {
+  const consulta =
+    normalizar($("busqueda").value);
+
+  const zona =
+    $("zona").value;
+
+  const comprador =
+    $("comprador").value;
+
+  const resultados = productos.filter(producto => {
+    const texto = normalizar([
+      producto.nombre,
+      producto.categoria,
+      producto.zona,
+      ...producto.compradores
+    ].join(" "));
+
+    return (
+      (!categoriaActual ||
+        producto.categoria === categoriaActual) &&
+
+      (!zona ||
+        producto.zona === zona) &&
+
+      (!comprador ||
+        producto.compradores.includes(comprador)) &&
+
+      texto.includes(consulta)
+    );
+  });
+
+  $("productos").replaceChildren();
+
+  resultados.forEach(producto => {
+    const tarjeta =
+      document.createElement("article");
+
+    tarjeta.className = "tarjeta";
+
+    tarjeta.innerHTML = `
+      <div class="ilustracion">
+        <span class="ejemplo">
+          EJEMPLO · SIN OFERTA REAL
+        </span>
+
+        <svg
+          viewBox="0 0 120 120"
+          aria-hidden="true"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round">
+
+          ${dibujos[producto.dibujo]}
+        </svg>
+      </div>
+
+      <div class="tarjeta-info">
+        <h3>${producto.nombre}</h3>
+
+        <p>
+          ◎ ${producto.zona} · Zona ilustrativa
+        </p>
+
+        <p class="dato">
+          ${producto.categoria}<br>
+          Fecha y cantidad por confirmar
+        </p>
+
+        <button
+          class="ver-detalle"
+          type="button">
+
+          Ver ejemplo
+          <span aria-hidden="true">↗</span>
+        </button>
+      </div>
+    `;
+
+    tarjeta
+      .querySelector("button")
+      .addEventListener("click", () => {
+        $("dialogo-titulo").textContent =
+          producto.nombre;
+
+        $("dialogo-descripcion").textContent =
+          `Escenario ilustrativo en ${producto.zona}. ` +
+          `No corresponde a un productor registrado.`;
+
+        $("dialogo").showModal();
       });
 
-      $("contador").textContent = resultados.length === 1
-        ? "1 ejemplo ilustrativo"
-        : `${resultados.length} ejemplos ilustrativos`;
+    $("productos").append(tarjeta);
+  });
 
-      $("sin-resultados").hidden = resultados.length > 0;
-    }
+  $("contador").textContent =
+    resultados.length === 1
+      ? "1 ejemplo ilustrativo"
+      : `${resultados.length} ejemplos ilustrativos`;
 
-    $("formulario-busqueda").addEventListener("submit", evento => {
-      evento.preventDefault();
+  $("sin-resultados").hidden =
+    resultados.length > 0;
+}
+
+$("formulario-busqueda").addEventListener(
+  "submit",
+  evento => {
+    evento.preventDefault();
+    mostrarProductos();
+  }
+);
+
+$("busqueda").addEventListener(
+  "input",
+  mostrarProductos
+);
+
+$("zona").addEventListener(
+  "change",
+  mostrarProductos
+);
+
+$("comprador").addEventListener(
+  "change",
+  mostrarProductos
+);
+
+document
+  .querySelectorAll("[data-categoria]")
+  .forEach(boton => {
+    boton.addEventListener("click", () => {
+      categoriaActual =
+        boton.dataset.categoria;
+
+      document
+        .querySelectorAll("[data-categoria]")
+        .forEach(opcion => {
+          const seleccionada =
+            opcion === boton;
+
+          opcion.classList.toggle(
+            "seleccionada",
+            seleccionada
+          );
+
+          opcion.setAttribute(
+            "aria-pressed",
+            String(seleccionada)
+          );
+        });
+
       mostrarProductos();
     });
+  });
 
-    $("busqueda").addEventListener("input", mostrarProductos);
-    $("zona").addEventListener("change", mostrarProductos);
-    $("comprador").addEventListener("change", mostrarProductos);
+$("restablecer").addEventListener(
+  "click",
+  () => {
+    $("formulario-busqueda").reset();
 
-    document.querySelectorAll("[data-categoria]").forEach(boton => {
-      boton.addEventListener("click", () => {
-        categoriaActual = boton.dataset.categoria;
+    document
+      .querySelector('[data-categoria=""]')
+      .click();
 
-        document.querySelectorAll("[data-categoria]").forEach(opcion => {
-          const seleccionada = opcion === boton;
-          opcion.classList.toggle("seleccionada", seleccionada);
-          opcion.setAttribute("aria-pressed", String(seleccionada));
-        });
+    $("busqueda").focus();
+  }
+);
 
-        mostrarProductos();
-      });
-    });
+/* PREGUNTAS DE SEMILLITA */
 
-    $("restablecer").addEventListener("click", () => {
-      $("formulario-busqueda").reset();
-      document.querySelector('[data-categoria=""]').click();
-      $("busqueda").focus();
-    });
+const preguntas = [
+  [
+    "¿Qué es Cosecha Libre?",
+    "Es una propuesta de web móvil para acercar pequeños productores y compradores locales. Todavía no funciona como mercado."
+  ],
+  [
+    "¿Puedo reservar ahora?",
+    "Todavía no. Las fichas no contienen inventario, precios ni fechas confirmadas."
+  ],
+  [
+    "¿Qué busca validar?",
+    "El proyecto quiere explorar reservas antes de la cosecha y agrupación de solicitudes por cantón. Ambas ideas deben probarse con usuarios reales."
+  ],
+  [
+    "¿Cómo participarían las sodas?",
+    "Podrían consultar cosechas y expresar una necesidad de compra. El acuerdo se realizaría directamente con el productor."
+  ],
+  [
+    "¿Las sodas mostradas son reales?",
+    "No. Sus nombres y necesidades fueron inventados para ilustrar el prototipo."
+  ],
+  [
+    "¿La web cobra o hace entregas?",
+    "El alcance inicial no contempla comisión, pagos en línea ni logística propia."
+  ],
+  [
+    "¿Dónde estaría disponible?",
+    "El cantón del piloto todavía no se ha definido. Las zonas visibles son escenarios de navegación."
+  ],
+  [
+    "¿Semillita asesora sobre cultivos?",
+    "No. Semillita solo explica el proyecto y muestra respuestas programadas."
+  ],
+  [
+    "¿Guardan mis datos?",
+    "Este prototipo no incluye cuentas ni formularios. El buscador funciona directamente en su navegador."
+  ]
+];
 
-    preguntas.forEach(([pregunta, respuesta], indice) => {
-      if (indice < 6) {
-        const detalle = document.createElement("details");
-        const resumen = document.createElement("summary");
-        const texto = document.createElement("p");
+preguntas.forEach(([pregunta, respuesta]) => {
+  const boton =
+    document.createElement("button");
 
-        resumen.textContent = pregunta;
-        texto.textContent = respuesta;
-        detalle.append(resumen, texto);
-        $("lista-preguntas").append(detalle);
-      }
+  boton.type = "button";
+  boton.textContent = pregunta;
 
-      const boton = document.createElement("button");
-      boton.type = "button";
-      boton.textContent = pregunta;
+  boton.addEventListener("click", () => {
+    $("respuesta-bot").textContent =
+      respuesta;
 
-      boton.addEventListener("click", () => {
-        $("respuesta-bot").textContent = respuesta;
-        document.querySelector(".bot-cuerpo").scrollTop = 0;
-      });
+    document.querySelector(
+      ".bot-cuerpo"
+    ).scrollTop = 0;
+  });
 
-      $("bot-opciones").append(boton);
-    });
+  $("opciones-bot").append(boton);
+});
 
-    let volverABoton = $("abrir-bot");
+let botonAnterior =
+  $("abrir-bot");
 
-    function mostrarBot(abrir, origen) {
-      if (origen) volverABoton = origen;
+function mostrarBot(abrir, origen) {
+  if (origen) botonAnterior = origen;
 
-      $("bot").hidden = !abrir;
-      $("abrir-bot").setAttribute("aria-expanded", String(abrir));
+  $("bot").hidden = !abrir;
 
-      if (abrir) {
-        $("cerrar-bot").focus();
-      } else {
-        volverABoton.focus();
-      }
+  $("abrir-bot").setAttribute(
+    "aria-expanded",
+    String(abrir)
+  );
+
+  if (abrir) {
+    $("cerrar-bot").focus();
+  } else {
+    botonAnterior.focus();
+  }
+}
+
+$("abrir-bot").addEventListener(
+  "click",
+  () => {
+    mostrarBot(
+      $("bot").hidden,
+      $("abrir-bot")
+    );
+  }
+);
+
+$("preguntar-semillita").addEventListener(
+  "click",
+  () => {
+    mostrarBot(
+      true,
+      $("preguntar-semillita")
+    );
+  }
+);
+
+$("cerrar-bot").addEventListener(
+  "click",
+  () => mostrarBot(false)
+);
+
+/* DIÁLOGO DE PRODUCTOS */
+
+document
+  .querySelector(".cerrar-dialogo")
+  .addEventListener("click", () => {
+    $("dialogo").close();
+  });
+
+$("dialogo").addEventListener(
+  "click",
+  evento => {
+    if (evento.target !== $("dialogo")) return;
+
+    const limites =
+      $("dialogo").getBoundingClientRect();
+
+    const fuera =
+      evento.clientX < limites.left ||
+      evento.clientX > limites.right ||
+      evento.clientY < limites.top ||
+      evento.clientY > limites.bottom;
+
+    if (fuera) {
+      $("dialogo").close();
+    }
+  }
+);
+
+document.addEventListener(
+  "keydown",
+  evento => {
+    if (evento.key !== "Escape") return;
+
+    if (!$("bot").hidden) {
+      mostrarBot(false);
     }
 
-    $("abrir-bot").addEventListener("click", () => {
-      mostrarBot($("bot").hidden, $("abrir-bot"));
-    });
-
-    $("preguntar-bot").addEventListener("click", () => {
-      mostrarBot(true, $("preguntar-bot"));
-    });
-
-    $("cerrar-bot").addEventListener("click", () => mostrarBot(false));
-
-    function mostrarMenu(abrir) {
-      $("sidebar").classList.toggle("abierta", abrir);
-      $("abrir-menu").setAttribute("aria-expanded", String(abrir));
-      $("abrir-menu").setAttribute("aria-label", abrir ? "Cerrar menú" : "Abrir menú");
+    if (
+      $("sidebar")
+        .classList
+        .contains("abierto-movil")
+    ) {
+      cerrarMenuMovil();
     }
+  }
+);
 
-    $("abrir-menu").addEventListener("click", () => {
-      const abrir = !$("sidebar").classList.contains("abierta");
-      mostrarMenu(abrir);
+/* INICIO */
 
-      if (abrir) $("sidebar").querySelector("a").focus();
-    });
+const vistaInicial =
+  titulos[location.hash.slice(1)]
+    ? location.hash.slice(1)
+    : "inicio";
 
-    document.querySelectorAll(".sidebar a").forEach(enlace => {
-      enlace.addEventListener("click", () => {
-        mostrarMenu(false);
+mostrarVista(
+  vistaInicial,
+  false
+);
 
-        if (window.matchMedia("(max-width: 640px)").matches) {
-          const destino = document.querySelector(enlace.hash);
-          if (destino) {
-            destino.setAttribute("tabindex", "-1");
-            destino.focus({ preventScroll: true });
-          }
-        }
-      });
-    });
+mostrarProductos();
 
-    document.addEventListener("click", evento => {
-      if (!$("sidebar").contains(evento.target)
-          && !$("abrir-menu").contains(evento.target)) {
-        mostrarMenu(false);
-      }
-    });
+actualizarBotonMenu(
+  !esMovil()
+);
+</script>
 
-    document.addEventListener("keydown", evento => {
-      if (evento.key !== "Escape") return;
-
-      if ($("sidebar").classList.contains("abierta")) {
-        mostrarMenu(false);
-        $("abrir-menu").focus();
-      }
-
-      if (!$("bot").hidden) mostrarBot(false);
-    });
-
-    document.querySelector(".cerrar-detalle").addEventListener("click", () => {
-      $("detalle").close();
-    });
-
-    $("detalle").addEventListener("click", evento => {
-      if (evento.target !== $("detalle")) return;
-
-      const limites = $("detalle").getBoundingClientRect();
-      const fuera = evento.clientX < limites.left
-        || evento.clientX > limites.right
-        || evento.clientY < limites.top
-        || evento.clientY > limites.bottom;
-
-      if (fuera) $("detalle").close();
-    });
-
-    if ("IntersectionObserver" in window) {
-      const observador = new IntersectionObserver(entradas => {
-        entradas.forEach(entrada => {
-          if (!entrada.isIntersecting) return;
-
-          document.querySelectorAll("nav a").forEach(enlace => {
-            const activo = enlace.hash === "#" + entrada.target.id;
-            enlace.classList.toggle("activo", activo);
-
-            if (activo) {
-              enlace.setAttribute("aria-current", "location");
-            } else {
-              enlace.removeAttribute("aria-current");
-            }
-          });
-        });
-      }, { rootMargin: "-10% 0px -65% 0px" });
-
-      document.querySelectorAll("main section[id]").forEach(seccion => {
-        observador.observe(seccion);
-      });
-    }
-
-    mostrarProductos();
-  </script>
 </body>
 </html>
