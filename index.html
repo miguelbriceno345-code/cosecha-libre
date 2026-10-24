@@ -4,12 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#245e3d">
+<meta name="description" content="Cosecha Libre, feria agrícola digital para conectar próximas cosechas con compradores locales.">
 <title>Cosecha Libre · Inicio</title>
 
 <style>
 :root{
   --verde:#245e3d;
   --verde-oscuro:#173d29;
+  --verde-medio:#6e9b55;
   --verde-claro:#edf5e9;
   --verde-suave:#f7faf5;
   --borde:#dce7d8;
@@ -31,9 +33,9 @@ body{
   line-height:1.6
 }
 
-button,input,select{font:inherit}
+button,input,select,textarea{font:inherit}
 button{cursor:pointer}
-button:disabled{cursor:not-allowed;opacity:.65}
+button:disabled{cursor:not-allowed;opacity:.6}
 
 h1,h2,h3,p{margin-top:0}
 
@@ -70,7 +72,7 @@ p{color:var(--secundario)}
 .planta{
   width:62px;
   height:62px;
-  color:#6f9b55
+  color:var(--verde-medio)
 }
 
 .sobre-titulo{
@@ -86,15 +88,16 @@ p{color:var(--secundario)}
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  gap:18px;
+  gap:15px;
   min-height:46px;
-  padding:11px 20px;
+  padding:11px 19px;
   border:1px solid var(--verde);
   border-radius:5px;
   background:var(--verde);
   color:#fff;
   font-size:12px;
-  font-weight:700
+  font-weight:700;
+  text-decoration:none
 }
 
 .boton:hover:not(:disabled){background:var(--verde-oscuro)}
@@ -104,12 +107,14 @@ p{color:var(--secundario)}
   color:var(--verde)
 }
 
-.boton.secundario:hover{background:var(--verde-claro)}
+.boton.secundario:hover:not(:disabled){
+  background:var(--verde-claro)
+}
 
-.enlace{
+.boton-texto{
   padding:0;
   border:0;
-  background:transparent;
+  background:none;
   color:var(--verde);
   font-size:12px;
   font-weight:700
@@ -117,28 +122,36 @@ p{color:var(--secundario)}
 
 .etiqueta{
   display:inline-block;
-  padding:5px 9px;
+  padding:5px 8px;
   border:1px solid var(--borde);
   border-radius:4px;
   color:var(--verde);
-  font-size:9px;
+  font-size:8px;
   letter-spacing:1px
 }
 
-/* Menú lateral */
+.aviso{
+  padding:13px 16px;
+  border-left:3px solid #7f9f67;
+  background:var(--verde-suave);
+  color:#374238;
+  font-size:11px
+}
+
+/* BARRA LATERAL */
 
 .sidebar{
   position:fixed;
   inset:0 auto 0 0;
   z-index:50;
   width:var(--lateral);
-  padding:34px 23px;
+  padding:32px 22px;
   border-right:1px solid var(--borde);
   background:#fff;
   display:flex;
   flex-direction:column;
   overflow:auto;
-  transition:transform .25s,visibility .25s
+  transition:.25s
 }
 
 .menu-oculto .sidebar{
@@ -172,30 +185,30 @@ p{color:var(--secundario)}
 }
 
 .lema{
-  margin:21px 0 37px;
+  margin:20px 0 32px;
   color:var(--verde);
   font-size:9px;
-  letter-spacing:2.2px
+  letter-spacing:2.1px
 }
 
 .menu{
   display:grid;
-  gap:7px
+  gap:5px
 }
 
 .menu button{
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:11px;
   width:100%;
-  min-height:46px;
-  padding:10px 12px;
+  min-height:43px;
+  padding:9px 11px;
   border:0;
   border-radius:6px;
-  background:transparent;
+  background:none;
   color:var(--texto);
   text-align:left;
-  font-size:13px
+  font-size:12px
 }
 
 .menu button:hover,
@@ -207,25 +220,25 @@ p{color:var(--secundario)}
 .menu button.activo{font-weight:700}
 
 .menu button span{
-  width:21px;
-  font-size:20px;
+  width:20px;
+  font-size:18px;
   text-align:center
 }
 
 .sidebar-pie{
   margin-top:auto;
-  padding:35px 10px 0
+  padding:28px 9px 0
 }
 
 .sidebar-pie strong{
   display:block;
-  font-size:16px;
+  font-size:15px;
   font-weight:500
 }
 
-.sidebar-pie p{font-size:12px}
+.sidebar-pie p{font-size:11px}
 
-/* Contenido principal */
+/* CONTENIDO */
 
 .pagina{
   min-height:100vh;
@@ -236,7 +249,7 @@ p{color:var(--secundario)}
 .menu-oculto .pagina{margin-left:0}
 
 .barra-superior{
-  min-height:72px;
+  min-height:70px;
   margin:0 40px;
   border-bottom:1px solid var(--borde);
   display:flex;
@@ -278,13 +291,13 @@ p{color:var(--secundario)}
 }
 
 main{
-  min-height:calc(100vh - 240px);
+  min-height:calc(100vh - 235px);
   padding:0 40px
 }
 
 .vista{
   display:none;
-  animation:aparecer .22s ease
+  animation:aparecer .2s ease
 }
 
 .vista.activa{display:block}
@@ -292,27 +305,28 @@ main{
 @keyframes aparecer{
   from{
     opacity:0;
-    transform:translateY(8px)
+    transform:translateY(7px)
   }
+
   to{
     opacity:1;
     transform:none
   }
 }
 
-/* Inicio */
+/* INICIO */
 
 .portada{
   display:grid;
   grid-template-columns:1.05fr 1fr;
   align-items:center;
   gap:35px;
-  min-height:calc(100vh - 73px);
+  min-height:calc(100vh - 71px);
   padding:35px 0
 }
 
 .portada p{
-  max-width:470px;
+  max-width:490px;
   font-size:15px
 }
 
@@ -320,11 +334,11 @@ main{
   display:flex;
   flex-wrap:wrap;
   align-items:center;
-  gap:20px;
+  gap:18px;
   margin:28px 0
 }
 
-.nota{font-size:10px!important}
+.micro{font-size:10px!important}
 
 .foto-portada{
   position:relative;
@@ -372,47 +386,66 @@ main{
   color:var(--secundario)
 }
 
-/* Apartados */
+.valores{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-top:22px
+}
+
+.valores div{
+  padding:14px;
+  border:1px solid var(--borde);
+  border-radius:6px;
+  background:var(--verde-suave)
+}
+
+.valores strong{
+  display:block;
+  color:var(--verde);
+  font-size:12px
+}
+
+.valores span{
+  font-size:10px;
+  color:var(--secundario)
+}
+
+/* VISTAS */
 
 .encabezado-vista{
   display:flex;
   align-items:end;
   justify-content:space-between;
   gap:25px;
-  padding:52px 0 28px;
+  padding:50px 0 27px;
   border-bottom:1px solid var(--borde)
 }
 
 .encabezado-vista h1{
-  margin-bottom:12px;
-  font-size:clamp(35px,4vw,54px)
+  margin-bottom:11px;
+  font-size:clamp(35px,4vw,53px)
 }
 
 .encabezado-vista p{
-  max-width:650px;
+  max-width:680px;
   margin:0;
   font-size:14px
 }
 
-.contenido-vista{padding:30px 0 60px}
-
-.aviso{
-  padding:13px 16px;
-  border-left:3px solid #7f9f67;
-  background:var(--verde-suave);
-  color:#374238;
-  font-size:11px
+.contenido-vista{
+  padding:29px 0 58px
 }
 
-/* Filtros */
+/* FILTROS */
 
 .filtros{
   display:grid;
-  grid-template-columns:1.8fr 1fr 1.15fr auto;
+  grid-template-columns:1.7fr 1fr 1.1fr auto;
   align-items:end;
   gap:12px;
   padding:18px;
-  margin:25px 0 20px;
+  margin:24px 0 20px;
   border:1px solid var(--borde);
   border-radius:8px;
   background:var(--verde-suave)
@@ -420,17 +453,21 @@ main{
 
 .filtros>div{min-width:0}
 
-.filtros label{
+.filtros label,
+.campo-formulario label{
   display:block;
   font-size:10px;
   font-weight:700
 }
 
 .filtros input,
-.filtros select{
+.filtros select,
+.campo-formulario input,
+.campo-formulario select,
+.campo-formulario textarea{
   width:100%;
   min-width:0;
-  min-height:45px;
+  min-height:44px;
   margin-top:6px;
   padding:10px;
   border:1px solid #d2ddce;
@@ -454,8 +491,8 @@ main{
 }
 
 .categoria{
-  min-height:36px;
-  padding:7px 15px;
+  min-height:35px;
+  padding:7px 14px;
   border:1px solid var(--borde);
   border-radius:20px;
   background:#fff;
@@ -473,7 +510,7 @@ main{
   font-size:11px
 }
 
-/* Tarjetas */
+/* COSECHAS */
 
 .rejilla{
   display:grid;
@@ -491,57 +528,114 @@ main{
 
 .tarjeta:hover{transform:translateY(-3px)}
 
-.ilustracion{
+.ilustracion-cosecha{
   position:relative;
-  height:150px;
+  height:125px;
   display:grid;
   place-items:center;
   background:var(--verde-claro)
 }
 
-.tarjeta:nth-child(even) .ilustracion{background:#f3f6ee}
+.tarjeta:nth-child(even) .ilustracion-cosecha{
+  background:#f3f6ee
+}
 
-.ilustracion svg{
-  width:122px;
-  height:122px;
+.ilustracion-cosecha svg{
+  width:95px;
+  height:95px;
   color:var(--verde)
 }
 
 .ejemplo{
   position:absolute;
-  top:11px;
-  left:11px;
+  top:10px;
+  left:10px;
   padding:3px 7px;
   border:1px solid var(--borde);
   border-radius:3px;
   background:#fff;
-  font-size:8px
+  font-size:7px
 }
 
-.tarjeta-info{padding:18px}
-.tarjeta-info h3{margin-bottom:7px}
+.cuerpo-tarjeta{padding:17px}
+.cuerpo-tarjeta h3{margin-bottom:5px}
 
-.tarjeta-info p{
+.metadatos{
   margin-bottom:13px;
-  font-size:11px
+  font-size:10px
 }
 
-.dato{
-  padding-top:12px;
-  border-top:1px solid var(--borde)
+.fecha-cosecha{
+  display:block;
+  margin:10px 0;
+  color:var(--verde-oscuro);
+  font-size:11px;
+  font-weight:700
 }
 
-.ver-detalle{
+.texto-progreso{
   display:flex;
   justify-content:space-between;
-  width:100%;
-  min-height:34px;
-  padding:0;
-  border:0;
-  background:none;
+  gap:8px;
+  margin-top:13px;
+  font-size:9px;
+  color:var(--secundario)
+}
+
+.progreso{
+  height:7px;
+  margin:6px 0 11px;
+  overflow:hidden;
+  border-radius:10px;
+  background:#e7ede3
+}
+
+.progreso span{
+  display:block;
+  height:100%;
+  border-radius:10px;
+  background:var(--verde-medio)
+}
+
+.contadores{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin:11px 0
+}
+
+.contadores span{
+  padding:3px 6px;
+  border-radius:3px;
+  background:var(--verde-suave);
+  font-size:8px;
+  color:var(--secundario)
+}
+
+.acciones-tarjeta{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:7px;
+  margin-top:14px
+}
+
+.acciones-tarjeta .boton{
+  min-height:41px;
+  padding:9px 11px
+}
+
+.boton-whatsapp{
+  min-width:42px;
+  min-height:41px;
+  border:1px solid var(--verde);
+  border-radius:5px;
+  background:#fff;
   color:var(--verde);
-  font-size:12px;
   font-weight:700
+}
+
+.boton-whatsapp:hover:not(:disabled){
+  background:var(--verde-claro)
 }
 
 .sin-resultados{
@@ -550,16 +644,66 @@ main{
   text-align:center
 }
 
-/* Sodas ficticias */
+/* PRODUCTORES */
 
-.soda{padding:22px}
-
-.soda-superior{
-  display:flex;
-  justify-content:space-between
+.perfil{
+  padding:21px
 }
 
-.icono-soda{
+.perfil-superior{
+  display:flex;
+  align-items:center;
+  gap:12px
+}
+
+.avatar{
+  width:51px;
+  height:51px;
+  display:grid;
+  place-items:center;
+  flex-shrink:0;
+  border-radius:50%;
+  background:var(--verde-claro);
+  color:var(--verde);
+  font-weight:700
+}
+
+.perfil h3{
+  margin:0 0 3px;
+  font-size:18px
+}
+
+.lista-perfil{
+  margin:15px 0;
+  padding:14px 0;
+  border-top:1px solid var(--borde);
+  border-bottom:1px solid var(--borde);
+  list-style:none;
+  color:var(--secundario);
+  font-size:10px
+}
+
+.lista-perfil li+li{margin-top:5px}
+
+.acciones-perfil{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px
+}
+
+/* COMPRADORES */
+
+.tarjeta-comprador{
+  padding:22px
+}
+
+.comprador-superior{
+  display:flex;
+  justify-content:space-between;
+  gap:10px
+}
+
+.icono-comprador{
   width:48px;
   height:48px;
   display:grid;
@@ -567,70 +711,88 @@ main{
   border-radius:50%;
   background:var(--verde-claro);
   color:var(--verde);
-  font-size:23px
+  font-size:22px
 }
 
-.soda h3{margin:18px 0 6px}
-.soda p{font-size:12px}
+.tarjeta-comprador h3{
+  margin:17px 0 6px
+}
 
-.soda ul{
-  margin:16px 0 0;
-  padding:15px 0 0;
+.tarjeta-comprador p{font-size:12px}
+
+.tarjeta-comprador ul{
+  margin:15px 0 0;
+  padding:14px 0 0;
   border-top:1px solid var(--borde);
   list-style:none;
   color:var(--secundario);
-  font-size:11px
+  font-size:10px
 }
 
-.soda li+li{margin-top:6px}
+.tarjeta-comprador li+li{margin-top:5px}
 
-/* Funcionamiento y proyecto */
+/* FLUJOS */
 
-.pasos,
-.columnas{
+.recorrido,
+.columnas,
+.pasos{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:28px
+  gap:22px
 }
 
-.pasos article{
-  padding-top:18px;
-  border-top:1px solid #bdd0b4
-}
-
-.numero{
-  display:block;
-  margin-bottom:18px;
-  color:var(--verde);
-  font-size:13px
-}
-
-.pasos p,
-.columnas p{font-size:13px}
-
+.recorrido article,
 .columnas article{
-  padding:23px;
+  padding:22px;
   border:1px solid var(--borde);
   border-radius:7px;
   background:var(--verde-suave)
 }
 
-.columnas h3{font-size:17px}
+.recorrido strong{
+  display:block;
+  margin-bottom:9px;
+  color:var(--verde);
+  font-size:12px
+}
 
-/* Semillita */
+.recorrido p,
+.columnas p,
+.pasos p{
+  font-size:12px
+}
+
+.pasos article{
+  padding-top:17px;
+  border-top:1px solid #bdd0b4
+}
+
+.numero{
+  display:block;
+  margin-bottom:17px;
+  color:var(--verde);
+  font-size:13px
+}
+
+.columnas h3,
+.recorrido h3{
+  font-size:17px
+}
+
+/* SEMILLITA */
 
 .presentacion-semillita{
   display:grid;
   grid-template-columns:.8fr 1.2fr;
-  gap:45px;
+  gap:42px;
   align-items:center;
   max-width:900px;
   margin:auto;
-  padding:25px 0
+  padding:24px 0
 }
 
 .robot-grande{
-  min-height:300px;
+  min-height:280px;
   display:grid;
   place-items:center;
   border-radius:10px;
@@ -638,26 +800,25 @@ main{
 }
 
 .robot-grande svg{
-  width:145px;
-  height:145px;
+  width:140px;
+  height:140px;
   color:var(--verde)
 }
 
-.presentacion-semillita p{font-size:14px}
-.aclaracion{font-size:11px!important}
+.presentacion-semillita p{font-size:13px}
 
-/* Pie */
+/* PIE */
 
 footer{
-  padding:35px 40px 20px;
+  padding:34px 40px 18px;
   border-top:1px solid var(--borde)
 }
 
 .footer-columnas{
   display:grid;
-  grid-template-columns:1fr 1fr 1.2fr;
-  gap:30px;
-  font-size:11px
+  grid-template-columns:1fr 1fr 1.25fr;
+  gap:28px;
+  font-size:10px
 }
 
 .footer-logo{
@@ -672,7 +833,7 @@ footer{
 
 .footer-columnas strong{
   display:block;
-  margin-bottom:10px
+  margin-bottom:9px
 }
 
 .footer-columnas p{margin:0}
@@ -681,14 +842,14 @@ footer{
   display:flex;
   justify-content:space-between;
   gap:15px;
-  margin-top:24px;
-  padding:18px 0 55px;
+  margin-top:23px;
+  padding:17px 0 54px;
   border-top:1px solid var(--borde);
   color:var(--secundario);
   font-size:9px
 }
 
-/* Ventana de Semillita */
+/* SEMILLITA FLOTANTE */
 
 .abrir-bot{
   position:fixed;
@@ -755,7 +916,7 @@ footer{
   font-size:25px
 }
 
-.bot-cuerpo{
+.cuerpo-bot{
   max-height:58vh;
   padding:16px;
   overflow:auto
@@ -783,20 +944,24 @@ footer{
   font-size:11px
 }
 
-.opciones-bot button:hover{background:var(--verde-claro)}
+.opciones-bot button:hover{
+  background:var(--verde-claro)
+}
 
-/* Ficha del producto */
+/* VENTANA PARA UNIRSE A UNA COSECHA */
 
 dialog{
   width:calc(100% - 32px);
-  max-width:510px;
-  padding:30px;
+  max-width:540px;
+  padding:29px;
   border:1px solid var(--borde);
   border-radius:12px;
   color:var(--texto)
 }
 
-dialog::backdrop{background:#10291bb3}
+dialog::backdrop{
+  background:#10291bb3
+}
 
 .cerrar-dialogo{
   float:right;
@@ -806,23 +971,68 @@ dialog::backdrop{background:#10291bb3}
   font-size:25px
 }
 
-dialog p,
-dialog dl{font-size:13px}
-
-dt{font-weight:700}
-
-dd{
-  margin:0 0 12px;
-  color:var(--secundario)
+.resumen-dialogo{
+  padding:12px;
+  margin-bottom:16px;
+  border-radius:6px;
+  background:var(--verde-claro);
+  font-size:11px
 }
 
-/* Adaptación */
+.acciones-dialogo{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin-top:17px
+}
 
-@media(max-width:1100px){
+.rejilla-formulario{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px
+}
+
+.resultado-prototipo{
+  margin-top:14px;
+  padding:12px;
+  border:1px solid var(--borde);
+  border-radius:6px;
+  background:var(--verde-suave);
+  font-size:11px
+}
+
+.resultado-prototipo textarea{
+  width:100%;
+  min-height:110px;
+  margin-top:8px;
+  padding:9px;
+  border:1px solid var(--borde);
+  border-radius:5px;
+  resize:vertical;
+  font-size:11px
+}
+
+.mensaje-flotante{
+  position:fixed;
+  left:50%;
+  bottom:24px;
+  z-index:90;
+  transform:translateX(-50%);
+  padding:11px 16px;
+  border-radius:6px;
+  background:var(--verde-oscuro);
+  color:#fff;
+  font-size:11px;
+  box-shadow:0 7px 30px #173d2930
+}
+
+/* ADAPTACIÓN */
+
+@media(max-width:1150px){
   :root{--lateral:215px}
 
-  .sidebar{padding:30px 16px}
-  .logo{font-size:30px}
+  .sidebar{padding:28px 14px}
+  .logo{font-size:29px}
   main{padding:0 28px}
   .barra-superior{margin:0 28px}
   .portada{gap:22px}
@@ -836,7 +1046,7 @@ dd{
   }
 }
 
-@media(max-width:780px){
+@media(max-width:790px){
   .sidebar{
     width:245px;
     box-shadow:10px 0 35px #173d2920
@@ -848,7 +1058,9 @@ dd{
   }
 
   .pagina,
-  .menu-oculto .pagina{margin-left:0}
+  .menu-oculto .pagina{
+    margin-left:0
+  }
 
   .barra-superior{
     min-height:64px;
@@ -875,22 +1087,23 @@ dd{
     flex-shrink:0
   }
 
-  .pasos,
-  .columnas{
+  .recorrido,
+  .columnas,
+  .pasos{
     grid-template-columns:1fr;
-    gap:20px
+    gap:18px
   }
 
   .presentacion-semillita{
     grid-template-columns:1fr;
-    gap:25px
+    gap:24px
   }
 
-  .robot-grande{min-height:210px}
+  .robot-grande{min-height:200px}
 
   .robot-grande svg{
-    width:110px;
-    height:110px
+    width:105px;
+    height:105px
   }
 
   .footer-columnas{
@@ -905,22 +1118,26 @@ dd{
 }
 
 @media(max-width:560px){
-  h1{font-size:43px}
+  h1{font-size:42px}
 
   .seccion-actual{
-    max-width:120px;
+    max-width:115px;
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap
   }
 
   .estado{font-size:8px}
-  .foto-portada{height:245px}
+  .foto-portada{height:240px}
 
   .leyenda-foto{
     right:12px;
     bottom:12px;
     left:12px
+  }
+
+  .valores{
+    grid-template-columns:1fr
   }
 
   .filtros{
@@ -940,6 +1157,7 @@ dd{
 
   .rejilla{grid-template-columns:1fr}
   .categorias{flex-wrap:wrap}
+  .rejilla-formulario{grid-template-columns:1fr}
   .footer-final{flex-direction:column}
 
   .abrir-bot{
@@ -950,6 +1168,10 @@ dd{
   .bot{
     right:15px;
     bottom:82px
+  }
+
+  .acciones-tarjeta{
+    grid-template-columns:1fr auto
   }
 }
 
@@ -966,9 +1188,13 @@ dd{
 
 <svg class="simbolos" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <symbol id="planta" viewBox="0 0 80 80">
-    <path d="M40 70V36M40 49C11 49 10 26 10 21c24-1 31 12 30 28ZM40 36C39 12 60 9 69 10c0 18-10 27-29 26Z"
-      fill="none" stroke="currentColor" stroke-width="3"
-      stroke-linecap="round" stroke-linejoin="round"/>
+    <path
+      d="M40 70V36M40 49C11 49 10 26 10 21c24-1 31 12 30 28ZM40 36C39 12 60 9 69 10c0 18-10 27-29 26Z"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="3"
+      stroke-linecap="round"
+      stroke-linejoin="round"/>
   </symbol>
 
   <symbol id="robot" viewBox="0 0 64 64">
@@ -987,19 +1213,27 @@ dd{
     <span>Cosecha<em>libre.</em></span>
   </button>
 
-  <p class="lema">DEL CAMPO, MÁS CERCA</p>
+  <p class="lema">FERIA AGRÍCOLA DIGITAL</p>
 
   <nav class="menu" aria-label="Menú principal">
     <button class="activo" data-vista="inicio">
       <span aria-hidden="true">⌂</span>Inicio
     </button>
 
-    <button data-vista="explorar">
-      <span aria-hidden="true">⌕</span>Explorar cosechas
+    <button data-vista="cosechas">
+      <span aria-hidden="true">⌕</span>Próximas cosechas
     </button>
 
-    <button data-vista="sodas">
-      <span aria-hidden="true">▣</span>Sodas del prototipo
+    <button data-vista="productores">
+      <span aria-hidden="true">♧</span>Productores
+    </button>
+
+    <button data-vista="negocios">
+      <span aria-hidden="true">▣</span>Sodas y restaurantes
+    </button>
+
+    <button data-vista="familias">
+      <span aria-hidden="true">⌂</span>Familias
     </button>
 
     <button data-vista="funciona">
@@ -1007,18 +1241,23 @@ dd{
     </button>
 
     <button data-vista="proyecto">
-      <span aria-hidden="true">♧</span>El proyecto
+      <span aria-hidden="true">◎</span>El proyecto
     </button>
 
     <button data-vista="semillita">
-      <span aria-hidden="true">?</span>Conozca a Semillita
+      <span aria-hidden="true">?</span>Semillita
     </button>
   </nav>
 
   <div class="sidebar-pie">
     <svg class="planta" aria-hidden="true"><use href="#planta"/></svg>
-    <strong>Una idea que crece<br>desde lo local.</strong>
-    <p>Conectemos a quienes cultivan con quienes compran.</p>
+
+    <strong>Comprar antes de cosechar.</strong>
+
+    <p>
+      Demanda local conectada directamente con quien produce.
+    </p>
+
     <span class="etiqueta">PROTOTIPO · COSTA RICA</span>
   </div>
 </aside>
@@ -1029,11 +1268,15 @@ dd{
       class="alternar-menu"
       id="alternar-menu"
       aria-label="Ocultar menú"
-      aria-expanded="true"
-      aria-controls="sidebar">☰</button>
+      aria-expanded="true">☰</button>
 
-    <span class="seccion-actual" id="seccion-actual">Inicio</span>
-    <span class="estado">Proyecto en desarrollo</span>
+    <span class="seccion-actual" id="seccion-actual">
+      Inicio
+    </span>
+
+    <span class="estado">
+      Prototipo en desarrollo
+    </span>
   </header>
 
   <main>
@@ -1043,27 +1286,52 @@ dd{
     <section class="vista activa" id="vista-inicio">
       <div class="portada">
         <div>
-          <span class="sobre-titulo">SEMBRAMOS CONEXIONES</span>
-          <h1>Lo que crece cerca,<br>nos conecta.</h1>
+          <span class="sobre-titulo">
+            FERIA AGRÍCOLA DIGITAL
+          </span>
+
+          <h1>
+            Reserve local.<br>
+            Antes de la cosecha.
+          </h1>
 
           <p>
-            Una propuesta para acercar las próximas cosechas a las sodas,
-            los restaurantes y las familias de una comunidad.
+            Cosecha Libre organiza próximas cosechas y conecta
+            directamente a productores con familias, sodas y
+            restaurantes de su zona.
           </p>
 
           <div class="acciones">
-            <button class="boton" data-vista="explorar">
-              Explorar la idea ↗
+            <button class="boton" data-vista="cosechas">
+              Ver próximas cosechas ↗
             </button>
 
-            <button class="enlace" data-vista="funciona">
-              ¿Cómo funcionaría? →
+            <button class="boton-texto" data-vista="funciona">
+              ¿Cómo funciona? →
             </button>
           </div>
 
-          <p class="nota">
-            ◎ Reservas antes de la cosecha · Encuentros por cantón
+          <p class="micro">
+            La plataforma conecta. El productor y el comprador
+            acuerdan la compra por WhatsApp.
           </p>
+
+          <div class="valores">
+            <div>
+              <strong>Producción futura</strong>
+              <span>Calendarios de cosecha</span>
+            </div>
+
+            <div>
+              <strong>Demanda por cantón</strong>
+              <span>Interés local agrupado</span>
+            </div>
+
+            <div>
+              <strong>Contacto directo</strong>
+              <span>Conversación por WhatsApp</span>
+            </div>
+          </div>
         </div>
 
         <div class="foto-portada">
@@ -1075,25 +1343,36 @@ dd{
             <svg aria-hidden="true"><use href="#planta"/></svg>
 
             <div>
-              <strong>De una semilla,<br>una conexión.</strong>
-              <small>El futuro también se cultiva cerca.</small>
+              <strong>
+                Únase a la próxima cosecha.
+              </strong>
+
+              <small>
+                Conozca qué viene, dónde y cuándo.
+              </small>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- COSECHAS -->
+    <!-- PRÓXIMAS COSECHAS -->
 
-    <section class="vista" id="vista-explorar" hidden>
+    <section class="vista" id="vista-cosechas" hidden>
       <header class="encabezado-vista">
         <div>
-          <span class="sobre-titulo">EXPLORAR COSECHAS</span>
-          <h1>¿Qué busca para su próxima mesa?</h1>
+          <span class="sobre-titulo">
+            PRÓXIMAS COSECHAS
+          </span>
+
+          <h1>
+            Lo que todavía está creciendo.
+          </h1>
 
           <p>
-            Use los filtros para probar cómo podrían encontrarse productos
-            por zona y tipo de comprador.
+            Explore fechas estimadas y manifieste cuánto le interesaría
+            comprar. El productor confirma disponibilidad, precio y
+            entrega por WhatsApp.
           </p>
         </div>
 
@@ -1102,46 +1381,55 @@ dd{
 
       <div class="contenido-vista">
         <div class="aviso">
-          <strong>Demostración:</strong> estos productos no corresponden a
-          ofertas reales. Las zonas, fechas y cantidades deberán confirmarse
-          durante un futuro piloto.
+          <strong>Datos simulados:</strong> productores, cantidades,
+          fechas, zonas y niveles de interés se muestran únicamente
+          para explicar el prototipo.
         </div>
 
         <form class="filtros" id="formulario-busqueda">
           <div class="filtro-busqueda">
-            <label for="busqueda">Producto o palabra clave</label>
+            <label for="busqueda">
+              Producto, productor o cantón
+            </label>
+
             <input
               id="busqueda"
               type="search"
-              placeholder="Lechuga, Cartago, sodas…"
+              placeholder="Lechuga, Oreamuno, Parcela Verde…"
               autocomplete="off">
           </div>
 
           <div>
-            <label for="zona">Zona</label>
-            <select id="zona">
-              <option value="">Todas</option>
-              <option>Cartago</option>
-              <option>Alajuela</option>
-              <option>San José</option>
+            <label for="canton">Cantón</label>
+
+            <select id="canton">
+              <option value="">Todos</option>
+              <option>Oreamuno</option>
+              <option>Grecia</option>
+              <option>Vázquez de Coronado</option>
             </select>
           </div>
 
           <div>
-            <label for="comprador">Comprador</label>
+            <label for="comprador">
+              Tipo de comprador
+            </label>
+
             <select id="comprador">
               <option value="">Todos</option>
-              <option value="sodas">Sodas</option>
-              <option value="restaurantes">Restaurantes</option>
-              <option value="familias">Familias</option>
+              <option value="familia">Familia</option>
+              <option value="soda">Soda</option>
+              <option value="restaurante">Restaurante</option>
             </select>
           </div>
 
-          <button class="boton" type="submit">Buscar ↗</button>
+          <button class="boton" type="submit">
+            Buscar ↗
+          </button>
         </form>
 
         <div class="herramientas">
-          <div class="categorias" role="group" aria-label="Filtrar por categoría">
+          <div class="categorias" role="group" aria-label="Categorías">
             <button
               class="categoria seleccionada"
               type="button"
@@ -1161,13 +1449,13 @@ dd{
               aria-pressed="false">Hierbas</button>
           </div>
 
-          <span id="contador" role="status"></span>
+          <span id="contador"></span>
         </div>
 
-        <div class="rejilla" id="productos"></div>
+        <div class="rejilla" id="cosechas"></div>
 
         <div class="sin-resultados" id="sin-resultados" hidden>
-          <h3>No encontramos coincidencias.</h3>
+          <h3>No encontramos cosechas de ejemplo.</h3>
           <p>Pruebe otra palabra o elimine los filtros.</p>
 
           <button
@@ -1178,17 +1466,22 @@ dd{
       </div>
     </section>
 
-    <!-- SODAS FICTICIAS -->
+    <!-- PRODUCTORES -->
 
-    <section class="vista" id="vista-sodas" hidden>
+    <section class="vista" id="vista-productores" hidden>
       <header class="encabezado-vista">
         <div>
-          <span class="sobre-titulo">COMPRADORES DE EJEMPLO</span>
-          <h1>Sodas que podrían comprar cerca.</h1>
+          <span class="sobre-titulo">
+            QUIENES CULTIVAN
+          </span>
+
+          <h1>
+            Productores y próximas cosechas.
+          </h1>
 
           <p>
-            Estas sodas fueron inventadas únicamente para mostrar cómo
-            se vería un directorio de compradores.
+            Cada perfil reúne su zona general, los productos de ejemplo
+            y un canal directo de WhatsApp autorizado.
           </p>
         </div>
 
@@ -1197,68 +1490,120 @@ dd{
 
       <div class="contenido-vista">
         <div class="aviso">
-          <strong>Nombres ficticios:</strong> ninguna de estas sodas está
-          registrada ni representa un negocio identificado.
+          <strong>Perfiles ficticios:</strong> los nombres se crearon
+          para la demostración. Antes de publicar un número real deberá
+          existir consentimiento del productor.
         </div>
 
-        <div class="rejilla" style="margin-top:25px">
+        <div
+          class="rejilla"
+          id="rejilla-productores"
+          style="margin-top:24px">
+        </div>
+      </div>
+    </section>
 
-          <article class="tarjeta soda">
-            <div class="soda-superior">
-              <span class="etiqueta">EJEMPLO FICTICIO</span>
-              <span class="icono-soda" aria-hidden="true">⌂</span>
+    <!-- SODAS Y RESTAURANTES -->
+
+    <section class="vista" id="vista-negocios" hidden>
+      <header class="encabezado-vista">
+        <div>
+          <span class="sobre-titulo">
+            COMPRADORES LOCALES
+          </span>
+
+          <h1>
+            Sodas y restaurantes.
+          </h1>
+
+          <p>
+            Los negocios pueden anticipar necesidades, encontrar
+            cosechas cercanas y conversar directamente con el productor.
+          </p>
+        </div>
+
+        <svg class="planta" aria-hidden="true"><use href="#planta"/></svg>
+      </header>
+
+      <div class="contenido-vista">
+        <div class="aviso">
+          <strong>Nombres ficticios:</strong> estos negocios ilustran
+          posibles compradores. No representan establecimientos registrados.
+        </div>
+
+        <div class="rejilla" style="margin-top:24px">
+
+          <article class="tarjeta tarjeta-comprador">
+            <div class="comprador-superior">
+              <span class="etiqueta">
+                EJEMPLO FICTICIO
+              </span>
+
+              <span class="icono-comprador" aria-hidden="true">
+                ▣
+              </span>
             </div>
 
-            <h3>Soda La Huerta Verde</h3>
+            <h3>Soda La Mesa Verde</h3>
 
             <p>
-              Escenario de una soda interesada en explorar hortalizas
-              para sus menús semanales.
+              Escenario de una soda que busca hortalizas para
+              planificar sus menús semanales.
             </p>
 
             <ul>
-              <li>◎ Zona ilustrativa: Cartago</li>
-              <li>Interés de ejemplo: lechuga y culantro</li>
+              <li>◎ Cantón ilustrativo: Oreamuno</li>
+              <li>Interés: lechuga y culantro</li>
               <li>Contacto: no disponible</li>
             </ul>
           </article>
 
-          <article class="tarjeta soda">
-            <div class="soda-superior">
-              <span class="etiqueta">EJEMPLO FICTICIO</span>
-              <span class="icono-soda" aria-hidden="true">⌂</span>
+          <article class="tarjeta tarjeta-comprador">
+            <div class="comprador-superior">
+              <span class="etiqueta">
+                EJEMPLO FICTICIO
+              </span>
+
+              <span class="icono-comprador" aria-hidden="true">
+                ▣
+              </span>
             </div>
 
-            <h3>Soda Sazón del Valle</h3>
+            <h3>Restaurante Raíces del Valle</h3>
 
             <p>
-              Ejemplo de un comercio pequeño que podría consultar
-              cosechas cercanas antes de comprar.
+              Ejemplo de un restaurante que consulta producción
+              futura antes de organizar sus compras.
             </p>
 
             <ul>
-              <li>◎ Zona ilustrativa: Alajuela</li>
-              <li>Interés de ejemplo: tomate y brócoli</li>
+              <li>◎ Cantón ilustrativo: Grecia</li>
+              <li>Interés: tomate y albahaca</li>
               <li>Contacto: no disponible</li>
             </ul>
           </article>
 
-          <article class="tarjeta soda">
-            <div class="soda-superior">
-              <span class="etiqueta">EJEMPLO FICTICIO</span>
-              <span class="icono-soda" aria-hidden="true">⌂</span>
+          <article class="tarjeta tarjeta-comprador">
+            <div class="comprador-superior">
+              <span class="etiqueta">
+                EJEMPLO FICTICIO
+              </span>
+
+              <span class="icono-comprador" aria-hidden="true">
+                ▣
+              </span>
             </div>
 
-            <h3>Soda El Fogón de la Montaña</h3>
+            <h3>Soda Camino a la Montaña</h3>
 
             <p>
-              Escenario para mostrar una solicitud agrupada con
+              Escenario de una solicitud que podría agruparse con
               compradores del mismo cantón.
             </p>
 
             <ul>
-              <li>◎ Zona ilustrativa: San José</li>
-              <li>Interés de ejemplo: zanahoria y hierbas</li>
+              <li>◎ Cantón ilustrativo: Vázquez de Coronado</li>
+              <li>Interés: zanahoria y brócoli</li>
               <li>Contacto: no disponible</li>
             </ul>
           </article>
@@ -1267,17 +1612,94 @@ dd{
       </div>
     </section>
 
+    <!-- FAMILIAS -->
+
+    <section class="vista" id="vista-familias" hidden>
+      <header class="encabezado-vista">
+        <div>
+          <span class="sobre-titulo">
+            COMPRA LOCAL EN FAMILIA
+          </span>
+
+          <h1>
+            Conozca lo que se cosechará cerca.
+          </h1>
+
+          <p>
+            Una familia puede explorar próximas cosechas, indicar
+            cuánto necesita y conversar directamente con quien produce.
+          </p>
+        </div>
+
+        <svg class="planta" aria-hidden="true"><use href="#planta"/></svg>
+      </header>
+
+      <div class="contenido-vista">
+        <div class="recorrido">
+          <article>
+            <strong>01 · Explore</strong>
+            <h3>Busque por producto o cantón</h3>
+
+            <p>
+              La fecha indica cuándo se espera la cosecha.
+              No representa disponibilidad garantizada.
+            </p>
+          </article>
+
+          <article>
+            <strong>02 · Manifieste interés</strong>
+            <h3>Indique una cantidad</h3>
+
+            <p>
+              Su solicitud se suma al interés local y queda
+              pendiente de confirmación.
+            </p>
+          </article>
+
+          <article>
+            <strong>03 · Converse</strong>
+            <h3>Continúe por WhatsApp</h3>
+
+            <p>
+              Consulte precio, cantidad final, calidad, pago y
+              punto de entrega con el productor.
+            </p>
+          </article>
+        </div>
+
+        <div class="aviso" style="margin-top:25px">
+          Cosecha Libre no recibe el pago ni entrega el producto.
+          Su función inicial es organizar la información y facilitar
+          el contacto directo.
+        </div>
+
+        <button
+          class="boton"
+          data-vista="cosechas"
+          style="margin-top:22px">
+
+          Explorar próximas cosechas ↗
+        </button>
+      </div>
+    </section>
+
     <!-- CÓMO FUNCIONA -->
 
     <section class="vista" id="vista-funciona" hidden>
       <header class="encabezado-vista">
         <div>
-          <span class="sobre-titulo">SENCILLO DESDE EL PRINCIPIO</span>
-          <h1>Del cultivo a una conversación.</h1>
+          <span class="sobre-titulo">
+            EL DIFERENCIADOR
+          </span>
+
+          <h1>
+            La demanda aparece antes de cosechar.
+          </h1>
 
           <p>
-            El recorrido propone tres pasos y deja los acuerdos
-            comerciales en manos de las personas involucradas.
+            A diferencia de un supermercado, Cosecha Libre no vende
+            inventario propio. Organiza producción futura y conecta
+            la intención de compra con el productor.
           </p>
         </div>
 
@@ -1288,38 +1710,62 @@ dd{
         <div class="pasos">
           <article>
             <span class="numero">01</span>
-            <h3>Compartir la cosecha</h3>
+            <h3>El productor anuncia</h3>
 
             <p>
-              El productor indicaría el producto, la cantidad estimada,
-              la zona y la fecha prevista.
+              Publica qué espera cosechar, en qué fecha, cuánta
+              cantidad estima y en cuál cantón se encuentra.
             </p>
           </article>
 
           <article>
             <span class="numero">02</span>
-            <h3>Encontrarse cerca</h3>
+            <h3>La comunidad se suma</h3>
 
             <p>
-              El comprador exploraría cosechas por cantón y enviaría
-              una solicitud anticipada.
+              Familias, sodas y restaurantes expresan cuántos kilos
+              les interesan. El sitio agrupa esa demanda.
             </p>
           </article>
 
           <article>
             <span class="numero">03</span>
-            <h3>Acordar directamente</h3>
+            <h3>Ambas partes acuerdan</h3>
 
             <p>
-              Ambas partes confirmarían disponibilidad, precio y entrega
-              antes de aceptar una reserva.
+              WhatsApp abre una conversación directa para confirmar
+              disponibilidad, precio, pago y entrega.
             </p>
           </article>
         </div>
 
-        <div class="aviso" style="margin-top:30px">
-          El alcance inicial no incluye pagos, transporte ni comisiones.
-          Una solicitud tampoco garantiza una venta.
+        <div class="columnas" style="margin-top:25px">
+          <article>
+            <h3>La plataforma organiza</h3>
+
+            <p>
+              Cosechas, zonas, fechas estimadas, productores y
+              señales de interés por cantón.
+            </p>
+          </article>
+
+          <article>
+            <h3>El productor confirma</h3>
+
+            <p>
+              La cosecha puede cambiar. Cada solicitud sigue
+              pendiente hasta recibir respuesta.
+            </p>
+          </article>
+
+          <article>
+            <h3>El comprador decide</h3>
+
+            <p>
+              La compra se concreta fuera de la web y bajo los
+              términos acordados con el productor.
+            </p>
+          </article>
         </div>
       </div>
     </section>
@@ -1329,12 +1775,18 @@ dd{
     <section class="vista" id="vista-proyecto" hidden>
       <header class="encabezado-vista">
         <div>
-          <span class="sobre-titulo">CONOZCA COSECHA LIBRE</span>
-          <h1>Una idea para fortalecer el comercio agrícola local.</h1>
+          <span class="sobre-titulo">
+            CONOZCA COSECHA LIBRE
+          </span>
+
+          <h1>
+            Una feria agrícola digital.
+          </h1>
 
           <p>
-            Cosecha Libre es una propuesta de web móvil para acercar
-            pequeños productores y compradores locales en Costa Rica.
+            La idea combina calendarios de próximas cosechas,
+            interés de compra por cantón y contacto directo con
+            productores locales.
           </p>
         </div>
 
@@ -1344,29 +1796,30 @@ dd{
       <div class="contenido-vista">
         <div class="columnas">
           <article>
-            <h3>Lo que queremos explorar</h3>
+            <h3>Problema que aborda</h3>
 
             <p>
-              Reservas antes de la cosecha y agrupación de solicitudes
-              por cantón. Ambas ideas requieren validación con usuarios.
+              Productores y compradores pequeños pueden tener
+              dificultades para encontrarse antes de que el producto
+              esté listo.
             </p>
           </article>
 
           <article>
-            <h3>En qué etapa estamos</h3>
+            <h3>Etapa actual</h3>
 
             <p>
-              Este sitio presenta el concepto. Todavía no existe un
-              mercado operativo ni un piloto comercial.
+              Este sitio es un prototipo conceptual. No existen
+              ofertas, usuarios, reservas ni negocios registrados.
             </p>
           </article>
 
           <article>
-            <h3>El siguiente paso</h3>
+            <h3>Próxima validación</h3>
 
             <p>
-              Conversar con productores y sodas, probar un recorrido
-              sencillo y medir acuerdos junto con entregas reales.
+              Conversar con productores y compradores para comprobar
+              si el calendario y la demanda anticipada les resultan útiles.
             </p>
           </article>
         </div>
@@ -1378,12 +1831,15 @@ dd{
     <section class="vista" id="vista-semillita" hidden>
       <header class="encabezado-vista">
         <div>
-          <span class="sobre-titulo">SU GUÍA EN EL PROTOTIPO</span>
+          <span class="sobre-titulo">
+            SU GUÍA EN EL PROTOTIPO
+          </span>
+
           <h1>Conozca a Semillita.</h1>
 
           <p>
-            Un pequeño asistente programado para explicar la propuesta
-            de Cosecha Libre.
+            Un asistente programado para explicar Cosecha Libre
+            sin solicitar datos personales.
           </p>
         </div>
 
@@ -1397,18 +1853,20 @@ dd{
           </div>
 
           <div>
-            <span class="sobre-titulo">HOLA, SOY SEMILLITA</span>
+            <span class="sobre-titulo">
+              HOLA, SOY SEMILLITA
+            </span>
+
             <h2>Pregunte cuando lo necesite.</h2>
 
             <p>
-              Semillita responde dudas sobre el funcionamiento,
-              el alcance y la etapa actual del proyecto.
+              Semillita responde dudas frecuentes sobre próximas
+              cosechas, solicitudes de interés y contacto por WhatsApp.
             </p>
 
-            <p class="aclaracion">
-              Sus respuestas están programadas. No utiliza inteligencia
-              artificial, no diagnostica cultivos y no brinda asesoría
-              agronómica.
+            <p class="micro">
+              No utiliza inteligencia artificial, no diagnostica
+              cultivos y no brinda asesoría agronómica.
             </p>
 
             <button class="boton" id="preguntar-semillita">
@@ -1429,18 +1887,16 @@ dd{
         </button>
 
         <p>
-          Del campo, más cerca.<br>
-          Una idea para el comercio agrícola local.
+          Próximas cosechas, demanda local y contacto directo.
         </p>
       </div>
 
       <div>
-        <strong>Información general</strong>
+        <strong>Alcance inicial</strong>
 
         <p>
-          Proyecto conceptual en Costa Rica.<br>
-          Sin transacciones ni usuarios registrados.<br>
-          Sin comisión prevista en la etapa inicial.
+          Sin pagos, logística ni comisión. Los acuerdos se realizan
+          entre productor y comprador.
         </p>
       </div>
 
@@ -1448,38 +1904,38 @@ dd{
         <strong>Transparencia</strong>
 
         <p>
-          Los productos, las zonas y las sodas son ejemplos del prototipo.
-          El sitio no solicita datos personales.
+          Todos los perfiles, fechas, cantidades y contadores visibles
+          son simulaciones del prototipo.
         </p>
       </div>
     </div>
 
     <div class="footer-final">
-      <span>Cosecha Libre · Prototipo para una feria de innovación</span>
-      <span>Diseñado para crecer con la comunidad</span>
+      <span>Cosecha Libre · Feria agrícola digital</span>
+      <span>Prototipo de innovación · Costa Rica</span>
     </div>
   </footer>
 </div>
 
-<!-- BOTÓN DE SEMILLITA -->
+<!-- SEMILLITA FLOTANTE -->
 
 <button
   class="abrir-bot"
   id="abrir-bot"
-  aria-label="Abrir asistente Semillita"
+  aria-label="Abrir Semillita"
   aria-expanded="false">
 
   <svg aria-hidden="true"><use href="#robot"/></svg>
   <span>¿Le ayudo?</span>
 </button>
 
-<section class="bot" id="bot" aria-label="Asistente Semillita" hidden>
+<section class="bot" id="bot" hidden>
   <header>
     <svg aria-hidden="true"><use href="#robot"/></svg>
 
     <div>
       <strong>Semillita</strong>
-      <small>Respuestas programadas sobre el proyecto</small>
+      <small>Respuestas programadas</small>
     </div>
 
     <button class="cerrar" id="cerrar-bot" aria-label="Cerrar">
@@ -1487,49 +1943,141 @@ dd{
     </button>
   </header>
 
-  <div class="bot-cuerpo">
-    <p class="respuesta" id="respuesta-bot" role="status">
-      ¡Hola! Elija una pregunta y le explicaré lo que sabemos hasta ahora.
+  <div class="cuerpo-bot">
+    <p class="respuesta" id="respuesta-bot">
+      ¡Hola! Elija una pregunta y le explicaré cómo funcionaría
+      esta feria agrícola digital.
     </p>
 
     <div class="opciones-bot" id="opciones-bot"></div>
   </div>
 </section>
 
-<!-- DETALLE DEL PRODUCTO -->
+<!-- UNIRSE A UNA COSECHA -->
 
-<dialog id="dialogo">
-  <button class="cerrar-dialogo" aria-label="Cerrar">×</button>
+<dialog id="dialogo-interes">
+  <button class="cerrar-dialogo" aria-label="Cerrar">
+    ×
+  </button>
 
-  <span class="sobre-titulo">FICHA ILUSTRATIVA</span>
-  <h2 id="dialogo-titulo"></h2>
-  <p id="dialogo-descripcion"></p>
+  <span class="sobre-titulo">
+    ÚNASE A ESTA COSECHA
+  </span>
 
-  <dl>
-    <dt>Cantidad</dt>
-    <dd>Por confirmar</dd>
+  <h2 id="titulo-interes"></h2>
 
-    <dt>Fecha de cosecha</dt>
-    <dd>Por confirmar</dd>
+  <div
+    class="resumen-dialogo"
+    id="resumen-interes">
+  </div>
 
-    <dt>Precio y entrega</dt>
-    <dd>Por acordar entre las partes</dd>
-  </dl>
+  <form id="formulario-interes">
+    <input id="id-cosecha" type="hidden">
 
-  <p class="aviso">
-    Esta ficha no constituye una oferta comercial.
-  </p>
+    <div class="rejilla-formulario">
+      <div class="campo-formulario">
+        <label for="cantidad">
+          Cantidad que le interesa
+        </label>
 
-  <button class="boton" disabled>Reserva no disponible</button>
+        <input
+          id="cantidad"
+          type="number"
+          min="1"
+          step="1"
+          required
+          placeholder="Ejemplo: 5">
+      </div>
+
+      <div class="campo-formulario">
+        <label for="unidad">Unidad</label>
+
+        <select id="unidad">
+          <option value="kg">Kilogramos</option>
+          <option value="unidades">Unidades</option>
+        </select>
+      </div>
+
+      <div class="campo-formulario">
+        <label for="tipo-comprador">
+          Usted compra como
+        </label>
+
+        <select id="tipo-comprador">
+          <option value="familia">Familia</option>
+          <option value="soda">Soda</option>
+          <option value="restaurante">Restaurante</option>
+        </select>
+      </div>
+
+      <div class="campo-formulario">
+        <label for="canton-comprador">
+          Su cantón
+        </label>
+
+        <input
+          id="canton-comprador"
+          required
+          placeholder="Ejemplo: Oreamuno">
+      </div>
+    </div>
+
+    <div class="acciones-dialogo">
+      <button class="boton" type="submit">
+        Preparar mensaje de WhatsApp ↗
+      </button>
+
+      <button
+        class="boton secundario"
+        id="cancelar-interes"
+        type="button">
+
+        Cancelar
+      </button>
+    </div>
+  </form>
+
+  <div
+    class="resultado-prototipo"
+    id="resultado-prototipo"
+    hidden>
+
+    <strong>Mensaje preparado</strong>
+
+    <p>
+      El productor todavía no tiene un número autorizado en este
+      prototipo. Puede copiar el mensaje mientras se configura el contacto.
+    </p>
+
+    <textarea
+      id="vista-mensaje"
+      readonly>
+    </textarea>
+
+    <button
+      class="boton secundario"
+      id="copiar-mensaje"
+      type="button">
+
+      Copiar mensaje
+    </button>
+  </div>
 </dialog>
+
+<div
+  class="mensaje-flotante"
+  id="mensaje-flotante"
+  hidden>
+</div>
 
 <script>
 "use strict";
 
-const $ = id => document.getElementById(id);
+const $ = id =>
+  document.getElementById(id);
 
 const esMovil = () =>
-  window.matchMedia("(max-width:780px)").matches;
+  window.matchMedia("(max-width:790px)").matches;
 
 const normalizar = texto =>
   texto
@@ -1537,67 +2085,99 @@ const normalizar = texto =>
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase();
 
-/* NAVEGACIÓN ENTRE APARTADOS */
+/* NAVEGACIÓN */
 
 const titulos = {
   inicio: "Inicio",
-  explorar: "Explorar cosechas",
-  sodas: "Sodas del prototipo",
+  cosechas: "Próximas cosechas",
+  productores: "Productores",
+  negocios: "Sodas y restaurantes",
+  familias: "Familias",
   funciona: "Cómo funciona",
   proyecto: "El proyecto",
-  semillita: "Conozca a Semillita"
+  semillita: "Semillita"
 };
 
 function mostrarVista(nombre, actualizarHistorial = true) {
   if (!titulos[nombre]) nombre = "inicio";
 
-  document.querySelectorAll(".vista").forEach(vista => {
-    const activa = vista.id === `vista-${nombre}`;
+  document
+    .querySelectorAll(".vista")
+    .forEach(vista => {
+      const activa =
+        vista.id === `vista-${nombre}`;
 
-    vista.classList.toggle("activa", activa);
-    vista.hidden = !activa;
-  });
+      vista.classList.toggle(
+        "activa",
+        activa
+      );
 
-  document.querySelectorAll(".menu [data-vista]").forEach(boton => {
-    const activo = boton.dataset.vista === nombre;
+      vista.hidden = !activa;
+    });
 
-    boton.classList.toggle("activo", activo);
+  document
+    .querySelectorAll(".menu [data-vista]")
+    .forEach(boton => {
+      const activo =
+        boton.dataset.vista === nombre;
 
-    if (activo) {
-      boton.setAttribute("aria-current", "page");
-    } else {
-      boton.removeAttribute("aria-current");
-    }
-  });
+      boton.classList.toggle(
+        "activo",
+        activo
+      );
 
-  $("seccion-actual").textContent = titulos[nombre];
-  document.title = `Cosecha Libre · ${titulos[nombre]}`;
+      if (activo) {
+        boton.setAttribute(
+          "aria-current",
+          "page"
+        );
+      } else {
+        boton.removeAttribute(
+          "aria-current"
+        );
+      }
+    });
+
+  $("seccion-actual").textContent =
+    titulos[nombre];
+
+  document.title =
+    `Cosecha Libre · ${titulos[nombre]}`;
 
   if (actualizarHistorial) {
     history.pushState(
-      { vista: nombre },
+      { nombre },
       "",
       `#${nombre}`
     );
   }
 
   window.scrollTo({
-    top: 0,
-    behavior: "smooth"
+    top:0,
+    behavior:"smooth"
   });
 
-  if (esMovil()) cerrarMenuMovil();
+  if (esMovil()) {
+    cerrarMenuMovil();
+  }
 }
 
-document.querySelectorAll("[data-vista]").forEach(boton => {
-  boton.addEventListener("click", () => {
-    mostrarVista(boton.dataset.vista);
+document
+  .querySelectorAll("[data-vista]")
+  .forEach(boton => {
+    boton.addEventListener(
+      "click",
+      () => {
+        mostrarVista(
+          boton.dataset.vista
+        );
+      }
+    );
   });
-});
 
 /* MOSTRAR Y OCULTAR MENÚ */
 
-function actualizarBotonMenu(abierto) {
+function actualizarMenu(abierto) {
   $("alternar-menu").setAttribute(
     "aria-expanded",
     String(abierto)
@@ -1605,263 +2185,454 @@ function actualizarBotonMenu(abierto) {
 
   $("alternar-menu").setAttribute(
     "aria-label",
-    abierto ? "Ocultar menú" : "Mostrar menú"
+    abierto
+      ? "Ocultar menú"
+      : "Mostrar menú"
   );
 }
 
 function cerrarMenuMovil() {
-  $("sidebar").classList.remove("abierto-movil");
-  actualizarBotonMenu(false);
+  $("sidebar").classList.remove(
+    "abierto-movil"
+  );
+
+  actualizarMenu(false);
 }
 
-$("alternar-menu").addEventListener("click", () => {
-  if (esMovil()) {
-    const abrir =
-      !$("sidebar").classList.contains("abierto-movil");
+$("alternar-menu").addEventListener(
+  "click",
+  () => {
+    if (esMovil()) {
+      const abrir =
+        !$("sidebar")
+          .classList
+          .contains("abierto-movil");
 
-    $("sidebar").classList.toggle(
-      "abierto-movil",
-      abrir
+      $("sidebar").classList.toggle(
+        "abierto-movil",
+        abrir
+      );
+
+      actualizarMenu(abrir);
+    } else {
+      const ocultar =
+        !document.body
+          .classList
+          .contains("menu-oculto");
+
+      document.body.classList.toggle(
+        "menu-oculto",
+        ocultar
+      );
+
+      actualizarMenu(!ocultar);
+    }
+  }
+);
+
+document.addEventListener(
+  "click",
+  evento => {
+    if (!esMovil()) return;
+
+    const abierto =
+      $("sidebar")
+        .classList
+        .contains("abierto-movil");
+
+    if (!abierto) return;
+
+    const clicEnMenu =
+      $("sidebar").contains(evento.target);
+
+    const clicEnBoton =
+      $("alternar-menu").contains(evento.target);
+
+    if (!clicEnMenu && !clicEnBoton) {
+      cerrarMenuMovil();
+    }
+  }
+);
+
+window.addEventListener(
+  "popstate",
+  () => {
+    mostrarVista(
+      location.hash.slice(1) || "inicio",
+      false
     );
-
-    actualizarBotonMenu(abrir);
-  } else {
-    const ocultar =
-      !document.body.classList.contains("menu-oculto");
-
-    document.body.classList.toggle(
-      "menu-oculto",
-      ocultar
-    );
-
-    actualizarBotonMenu(!ocultar);
   }
-});
+);
 
-document.addEventListener("click", evento => {
-  if (!esMovil()) return;
+/*
+  DIRECTORIO DE PRODUCTORES
 
-  if (!$("sidebar").classList.contains("abierto-movil")) {
-    return;
-  }
+  Para activar WhatsApp agregue únicamente números autorizados.
 
-  const clicEnMenu =
-    $("sidebar").contains(evento.target);
+  Formato para Costa Rica:
+  506 + ocho dígitos, sin espacios ni guiones.
 
-  const clicEnBoton =
-    $("alternar-menu").contains(evento.target);
+  Ejemplo de estructura:
+  whatsapp: "50688888888"
 
-  if (!clicEnMenu && !clicEnBoton) {
-    cerrarMenuMovil();
-  }
-});
+  No utilice ese número de ejemplo.
+*/
 
-window.addEventListener("popstate", () => {
-  mostrarVista(
-    location.hash.slice(1) || "inicio",
-    false
-  );
-});
-
-/* PRODUCTOS ILUSTRATIVOS */
-
-const productos = [
+const productores = [
   {
-    nombre: "Lechuga",
-    categoria: "Hortalizas",
-    zona: "Cartago",
-    compradores: ["sodas", "familias"],
-    dibujo: "hoja"
+    id:"p1",
+    nombre:"Parcela Verde A",
+    zona:"Oreamuno, Cartago",
+    productos:"Lechuga y culantro",
+    whatsapp:""
   },
   {
-    nombre: "Tomate",
-    categoria: "Hortalizas",
-    zona: "Alajuela",
-    compradores: ["sodas", "restaurantes"],
-    dibujo: "tomate"
+    id:"p2",
+    nombre:"Cultivo Local B",
+    zona:"Grecia, Alajuela",
+    productos:"Tomate y albahaca",
+    whatsapp:""
   },
   {
-    nombre: "Culantro",
-    categoria: "Hierbas",
-    zona: "San José",
-    compradores: ["sodas", "familias", "restaurantes"],
-    dibujo: "hierba"
-  },
-  {
-    nombre: "Zanahoria",
-    categoria: "Hortalizas",
-    zona: "Cartago",
-    compradores: ["sodas", "restaurantes"],
-    dibujo: "zanahoria"
-  },
-  {
-    nombre: "Brócoli",
-    categoria: "Hortalizas",
-    zona: "Alajuela",
-    compradores: ["familias", "restaurantes"],
-    dibujo: "brocoli"
-  },
-  {
-    nombre: "Albahaca",
-    categoria: "Hierbas",
-    zona: "San José",
-    compradores: ["restaurantes", "familias"],
-    dibujo: "hierba"
+    id:"p3",
+    nombre:"Huerta de Muestra C",
+    zona:"Vázquez de Coronado, San José",
+    productos:"Zanahoria y brócoli",
+    whatsapp:""
   }
 ];
 
-const dibujos = {
-  hoja: `
-    <path
-      d="M60 104C12 91 18 56 31 53 15 27 45 14
-      58 28 77 3 103 26 95 46 123 58 99 94 60 104Z"
-      fill="#aacb86"/>
-    <path
-      d="M60 103V35m0 46L37 61m23 5
-      23-20m-23 4L45 36"/>`,
+/* COSECHAS SIMULADAS */
 
-  tomate: `
-    <path
-      d="M61 41C20 19 11 67 28 89c17 22
-      60 21 73-3 16-29-6-54-40-45Z"
-      fill="#a5c481"/>
-    <path
-      d="m60 43-18-9 14-1 4-15 7 14
-      17-1-14 12"/>`,
+const cosechas = [
+  {
+    id:"h1",
+    producto:"Lechuga",
+    categoria:"Hortalizas",
+    productor:"p1",
+    canton:"Oreamuno",
+    fecha:"12 al 16 de noviembre",
+    estimado:180,
+    interes:75,
+    compradores:{
+      familia:4,
+      soda:2,
+      restaurante:0
+    },
+    permitidos:[
+      "familia",
+      "soda",
+      "restaurante"
+    ]
+  },
+  {
+    id:"h2",
+    producto:"Culantro",
+    categoria:"Hierbas",
+    productor:"p1",
+    canton:"Oreamuno",
+    fecha:"14 al 18 de noviembre",
+    estimado:90,
+    interes:34,
+    compradores:{
+      familia:3,
+      soda:1,
+      restaurante:1
+    },
+    permitidos:[
+      "familia",
+      "soda",
+      "restaurante"
+    ]
+  },
+  {
+    id:"h3",
+    producto:"Tomate",
+    categoria:"Hortalizas",
+    productor:"p2",
+    canton:"Grecia",
+    fecha:"20 al 25 de noviembre",
+    estimado:240,
+    interes:110,
+    compradores:{
+      familia:5,
+      soda:2,
+      restaurante:1
+    },
+    permitidos:[
+      "familia",
+      "soda",
+      "restaurante"
+    ]
+  },
+  {
+    id:"h4",
+    producto:"Albahaca",
+    categoria:"Hierbas",
+    productor:"p2",
+    canton:"Grecia",
+    fecha:"22 al 26 de noviembre",
+    estimado:55,
+    interes:19,
+    compradores:{
+      familia:2,
+      soda:0,
+      restaurante:2
+    },
+    permitidos:[
+      "familia",
+      "restaurante"
+    ]
+  },
+  {
+    id:"h5",
+    producto:"Zanahoria",
+    categoria:"Hortalizas",
+    productor:"p3",
+    canton:"Vázquez de Coronado",
+    fecha:"2 al 6 de diciembre",
+    estimado:210,
+    interes:86,
+    compradores:{
+      familia:6,
+      soda:1,
+      restaurante:1
+    },
+    permitidos:[
+      "familia",
+      "soda",
+      "restaurante"
+    ]
+  },
+  {
+    id:"h6",
+    producto:"Brócoli",
+    categoria:"Hortalizas",
+    productor:"p3",
+    canton:"Vázquez de Coronado",
+    fecha:"5 al 9 de diciembre",
+    estimado:130,
+    interes:48,
+    compradores:{
+      familia:3,
+      soda:2,
+      restaurante:0
+    },
+    permitidos:[
+      "familia",
+      "soda",
+      "restaurante"
+    ]
+  }
+];
 
-  hierba: `
-    <path
-      d="m45 108 22-74m-9 28L38 49
-      m15 31 28-15m-35 32L30 77"/>
-    <path
-      d="M66 37C48 32 48 14 59 13c14-9
-      23 12 7 24ZM39 50C18 55 12 32 27 32
-      c10-9 24 8 12 18ZM80 65C72 47 94 34
-      101 44c12 10-5 25-21 21Z"
-      fill="#a5c481"/>`,
+const buscarProductor = id =>
+  productores.find(
+    productor =>
+      productor.id === id
+  );
 
-  zanahoria: `
-    <path
-      d="M41 42c8-10 29-8 33 1L34 111Z"
-      fill="#b5cf91"/>
-    <path
-      d="m55 38-8-23m13 22 7-26m-3 27
-      20-17"/>`,
+function dibujoPlanta() {
+  return `
+    <svg
+      viewBox="0 0 80 80"
+      aria-hidden="true"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="3"
+      stroke-linecap="round"
+      stroke-linejoin="round">
 
-  brocoli: `
-    <path
-      d="m51 65-3 40h28L68 64"
-      fill="#bed69c"/>
-    <path
-      d="M35 72C9 72 12 47 27 43c-5-24
-      22-27 30-17 12-21 40-8 37 9
-      25 3 26 35 3 39-11 9-28 2-35-5
-      -10 11-21 11-27 3Z"
-      fill="#91b674"/>`
-};
+      <path
+        d="M40 70V36M40 49C11 49 10 26 10 21
+        c24-1 31 12 30 28ZM40 36C39 12 60 9
+        69 10c0 18-10 27-29 26Z"/>
+    </svg>
+  `;
+}
 
 let categoriaActual = "";
 
-function mostrarProductos() {
+function mostrarCosechas() {
   const consulta =
-    normalizar($("busqueda").value);
+    normalizar(
+      $("busqueda").value.trim()
+    );
 
-  const zona =
-    $("zona").value;
+  const canton =
+    $("canton").value;
 
   const comprador =
     $("comprador").value;
 
-  const resultados = productos.filter(producto => {
-    const texto = normalizar([
-      producto.nombre,
-      producto.categoria,
-      producto.zona,
-      ...producto.compradores
-    ].join(" "));
+  const resultados =
+    cosechas.filter(cosecha => {
+      const productor =
+        buscarProductor(
+          cosecha.productor
+        );
 
-    return (
-      (!categoriaActual ||
-        producto.categoria === categoriaActual) &&
+      const texto =
+        normalizar([
+          cosecha.producto,
+          cosecha.categoria,
+          cosecha.canton,
+          productor.nombre,
+          productor.zona
+        ].join(" "));
 
-      (!zona ||
-        producto.zona === zona) &&
+      return (
+        (!categoriaActual ||
+          cosecha.categoria === categoriaActual) &&
 
-      (!comprador ||
-        producto.compradores.includes(comprador)) &&
+        (!canton ||
+          cosecha.canton === canton) &&
 
-      texto.includes(consulta)
-    );
-  });
+        (!comprador ||
+          cosecha.permitidos.includes(comprador)) &&
 
-  $("productos").replaceChildren();
+        texto.includes(consulta)
+      );
+    });
 
-  resultados.forEach(producto => {
+  $("cosechas").replaceChildren();
+
+  resultados.forEach(cosecha => {
+    const productor =
+      buscarProductor(
+        cosecha.productor
+      );
+
+    const porcentaje =
+      Math.min(
+        100,
+        Math.round(
+          cosecha.interes /
+          cosecha.estimado *
+          100
+        )
+      );
+
     const tarjeta =
       document.createElement("article");
 
     tarjeta.className = "tarjeta";
 
     tarjeta.innerHTML = `
-      <div class="ilustracion">
+      <div class="ilustracion-cosecha">
         <span class="ejemplo">
-          EJEMPLO · SIN OFERTA REAL
+          SIMULACIÓN DEL PROTOTIPO
         </span>
 
-        <svg
-          viewBox="0 0 120 120"
-          aria-hidden="true"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round">
-
-          ${dibujos[producto.dibujo]}
-        </svg>
+        ${dibujoPlanta()}
       </div>
 
-      <div class="tarjeta-info">
-        <h3>${producto.nombre}</h3>
+      <div class="cuerpo-tarjeta">
+        <span class="etiqueta">
+          COSECHA ESTIMADA
+        </span>
 
-        <p>
-          ◎ ${producto.zona} · Zona ilustrativa
+        <h3>${cosecha.producto}</h3>
+
+        <p class="metadatos">
+          ${productor.nombre}<br>
+          ◎ ${cosecha.canton}
         </p>
 
-        <p class="dato">
-          ${producto.categoria}<br>
-          Fecha y cantidad por confirmar
-        </p>
+        <span class="fecha-cosecha">
+          ${cosecha.fecha}
+        </span>
 
-        <button
-          class="ver-detalle"
-          type="button">
+        <div class="texto-progreso">
+          <span>
+            Interés expresado:
+            ${cosecha.interes} kg
+          </span>
 
-          Ver ejemplo
-          <span aria-hidden="true">↗</span>
-        </button>
+          <span>
+            ${cosecha.estimado} kg estimados
+          </span>
+        </div>
+
+        <div
+          class="progreso"
+          aria-label="${porcentaje}% de interés">
+
+          <span style="width:${porcentaje}%"></span>
+        </div>
+
+        <div class="contadores">
+          <span>
+            ${cosecha.compradores.familia}
+            familias
+          </span>
+
+          <span>
+            ${cosecha.compradores.soda}
+            sodas
+          </span>
+
+          <span>
+            ${cosecha.compradores.restaurante}
+            restaurantes
+          </span>
+        </div>
+
+        <div class="acciones-tarjeta">
+          <button
+            class="boton unirse"
+            type="button">
+
+            Únase a esta cosecha
+          </button>
+
+          <button
+            class="boton-whatsapp whatsapp"
+            type="button"
+            ${productor.whatsapp ? "" : "disabled"}
+            aria-label="Hablar con ${productor.nombre} por WhatsApp">
+
+            WA
+          </button>
+        </div>
       </div>
     `;
 
     tarjeta
-      .querySelector("button")
-      .addEventListener("click", () => {
-        $("dialogo-titulo").textContent =
-          producto.nombre;
+      .querySelector(".unirse")
+      .addEventListener(
+        "click",
+        () => {
+          abrirInteres(
+            cosecha.id
+          );
+        }
+      );
 
-        $("dialogo-descripcion").textContent =
-          `Escenario ilustrativo en ${producto.zona}. ` +
-          `No corresponde a un productor registrado.`;
+    const botonWhatsapp =
+      tarjeta.querySelector(".whatsapp");
 
-        $("dialogo").showModal();
-      });
+    if (productor.whatsapp) {
+      botonWhatsapp.addEventListener(
+        "click",
+        () => {
+          abrirWhatsapp(
+            productor,
+            `Hola. Vi la próxima cosecha de ${cosecha.producto} en Cosecha Libre y deseo consultar su disponibilidad.`
+          );
+        }
+      );
+    }
 
-    $("productos").append(tarjeta);
+    $("cosechas").append(tarjeta);
   });
 
   $("contador").textContent =
-    resultados.length === 1
-      ? "1 ejemplo ilustrativo"
-      : `${resultados.length} ejemplos ilustrativos`;
+    `${resultados.length} ${
+      resultados.length === 1
+        ? "cosecha"
+        : "cosechas"
+    } de ejemplo`;
 
   $("sin-resultados").hidden =
     resultados.length > 0;
@@ -1871,51 +2642,54 @@ $("formulario-busqueda").addEventListener(
   "submit",
   evento => {
     evento.preventDefault();
-    mostrarProductos();
+    mostrarCosechas();
   }
 );
 
 $("busqueda").addEventListener(
   "input",
-  mostrarProductos
+  mostrarCosechas
 );
 
-$("zona").addEventListener(
+$("canton").addEventListener(
   "change",
-  mostrarProductos
+  mostrarCosechas
 );
 
 $("comprador").addEventListener(
   "change",
-  mostrarProductos
+  mostrarCosechas
 );
 
 document
   .querySelectorAll("[data-categoria]")
   .forEach(boton => {
-    boton.addEventListener("click", () => {
-      categoriaActual =
-        boton.dataset.categoria;
+    boton.addEventListener(
+      "click",
+      () => {
+        categoriaActual =
+          boton.dataset.categoria;
 
-      document
-        .querySelectorAll("[data-categoria]")
-        .forEach(opcion => {
-          const seleccionada =
-            opcion === boton;
+        document
+          .querySelectorAll("[data-categoria]")
+          .forEach(opcion => {
+            const seleccionada =
+              opcion === boton;
 
-          opcion.classList.toggle(
-            "seleccionada",
-            seleccionada
-          );
+            opcion.classList.toggle(
+              "seleccionada",
+              seleccionada
+            );
 
-          opcion.setAttribute(
-            "aria-pressed",
-            String(seleccionada)
-          );
-        });
+            opcion.setAttribute(
+              "aria-pressed",
+              String(seleccionada)
+            );
+          });
 
-      mostrarProductos();
-    });
+        mostrarCosechas();
+      }
+    );
   });
 
 $("restablecer").addEventListener(
@@ -1926,76 +2700,396 @@ $("restablecer").addEventListener(
     document
       .querySelector('[data-categoria=""]')
       .click();
-
-    $("busqueda").focus();
   }
 );
 
-/* PREGUNTAS DE SEMILLITA */
+/* PERFILES DE PRODUCTORES */
+
+function mostrarProductores() {
+  $("rejilla-productores")
+    .replaceChildren();
+
+  productores.forEach(
+    (productor, indice) => {
+      const cantidadCosechas =
+        cosechas.filter(
+          cosecha =>
+            cosecha.productor === productor.id
+        ).length;
+
+      const tarjeta =
+        document.createElement("article");
+
+      tarjeta.className =
+        "tarjeta perfil";
+
+      tarjeta.innerHTML = `
+        <div class="perfil-superior">
+          <span class="avatar">
+            P${indice + 1}
+          </span>
+
+          <div>
+            <span class="etiqueta">
+              PERFIL FICTICIO
+            </span>
+
+            <h3>${productor.nombre}</h3>
+          </div>
+        </div>
+
+        <ul class="lista-perfil">
+          <li>◎ ${productor.zona}</li>
+
+          <li>
+            Productos de ejemplo:
+            ${productor.productos}
+          </li>
+
+          <li>
+            Próximas cosechas:
+            ${cantidadCosechas}
+          </li>
+        </ul>
+
+        <div class="acciones-perfil">
+          <button
+            class="boton ver-cosechas"
+            type="button">
+
+            Ver cosechas
+          </button>
+
+          <button
+            class="boton secundario hablar"
+            type="button"
+            ${productor.whatsapp ? "" : "disabled"}>
+
+            ${
+              productor.whatsapp
+                ? "Hablar por WhatsApp"
+                : "WhatsApp pendiente"
+            }
+          </button>
+        </div>
+      `;
+
+      tarjeta
+        .querySelector(".ver-cosechas")
+        .addEventListener(
+          "click",
+          () => {
+            $("formulario-busqueda")
+              .reset();
+
+            $("busqueda").value =
+              productor.nombre;
+
+            mostrarVista("cosechas");
+            mostrarCosechas();
+          }
+        );
+
+      if (productor.whatsapp) {
+        tarjeta
+          .querySelector(".hablar")
+          .addEventListener(
+            "click",
+            () => {
+              abrirWhatsapp(
+                productor,
+                "Hola. Encontré su perfil en Cosecha Libre y deseo conocer sus próximas cosechas."
+              );
+            }
+          );
+      }
+
+      $("rejilla-productores")
+        .append(tarjeta);
+    }
+  );
+}
+
+/* WHATSAPP */
+
+function abrirWhatsapp(productor, mensaje) {
+  const numeroValido =
+    /^506\d{8}$/.test(
+      productor.whatsapp
+    );
+
+  if (!numeroValido) {
+    mostrarMensaje(
+      "Este productor aún no tiene un número autorizado."
+    );
+
+    return;
+  }
+
+  const enlace =
+    `https://wa.me/${productor.whatsapp}` +
+    `?text=${encodeURIComponent(mensaje)}`;
+
+  window.open(
+    enlace,
+    "_blank",
+    "noopener,noreferrer"
+  );
+}
+
+/* SOLICITUD DE INTERÉS */
+
+function abrirInteres(id) {
+  const cosecha =
+    cosechas.find(
+      elemento =>
+        elemento.id === id
+    );
+
+  const productor =
+    buscarProductor(
+      cosecha.productor
+    );
+
+  $("id-cosecha").value =
+    id;
+
+  $("titulo-interes").textContent =
+    cosecha.producto;
+
+  $("resumen-interes").textContent =
+    `${productor.nombre} · ${cosecha.canton} · ` +
+    `Cosecha estimada del ${cosecha.fecha}`;
+
+  $("formulario-interes").reset();
+
+  $("resultado-prototipo").hidden =
+    true;
+
+  $("dialogo-interes").showModal();
+
+  $("cantidad").focus();
+}
+
+$("formulario-interes").addEventListener(
+  "submit",
+  evento => {
+    evento.preventDefault();
+
+    const cosecha =
+      cosechas.find(
+        elemento =>
+          elemento.id ===
+          $("id-cosecha").value
+      );
+
+    const productor =
+      buscarProductor(
+        cosecha.productor
+      );
+
+    const cantidad =
+      Number(
+        $("cantidad").value
+      );
+
+    const unidad =
+      $("unidad").value;
+
+    const tipo =
+      $("tipo-comprador").value;
+
+    const canton =
+      $("canton-comprador")
+        .value
+        .trim();
+
+    if (!cantidad || cantidad < 1 || !canton) {
+      return;
+    }
+
+    const nombres = {
+      familia:"una familia",
+      soda:"una soda",
+      restaurante:"un restaurante"
+    };
+
+    const mensaje =
+      `Hola. Vi en Cosecha Libre la próxima cosecha de ` +
+      `${cosecha.producto}, estimada del ${cosecha.fecha} ` +
+      `en ${cosecha.canton}. Me interesa consultar por ` +
+      `${cantidad} ${unidad}. Compro como ${nombres[tipo]} ` +
+      `de ${canton}. ¿Podría confirmarme disponibilidad, ` +
+      `precio y entrega?`;
+
+    /*
+      Esta actualización solamente ocurre en el navegador.
+      Al recargar la página se restablecen los datos simulados.
+    */
+
+    cosecha.interes += cantidad;
+    cosecha.compradores[tipo] += 1;
+
+    mostrarCosechas();
+
+    const numeroValido =
+      productor.whatsapp &&
+      /^506\d{8}$/.test(
+        productor.whatsapp
+      );
+
+    if (numeroValido) {
+      abrirWhatsapp(
+        productor,
+        mensaje
+      );
+
+      $("dialogo-interes").close();
+    } else {
+      $("vista-mensaje").value =
+        mensaje;
+
+      $("resultado-prototipo").hidden =
+        false;
+
+      mostrarMensaje(
+        "Interés simulado en este navegador."
+      );
+    }
+  }
+);
+
+$("cancelar-interes").addEventListener(
+  "click",
+  () => {
+    $("dialogo-interes").close();
+  }
+);
+
+$("copiar-mensaje").addEventListener(
+  "click",
+  async () => {
+    const mensaje =
+      $("vista-mensaje").value;
+
+    try {
+      await navigator
+        .clipboard
+        .writeText(mensaje);
+
+      mostrarMensaje(
+        "Mensaje copiado."
+      );
+    } catch {
+      $("vista-mensaje").select();
+
+      document.execCommand(
+        "copy"
+      );
+
+      mostrarMensaje(
+        "Mensaje copiado."
+      );
+    }
+  }
+);
+
+document
+  .querySelector(".cerrar-dialogo")
+  .addEventListener(
+    "click",
+    () => {
+      $("dialogo-interes").close();
+    }
+  );
+
+/* MENSAJES TEMPORALES */
+
+function mostrarMensaje(texto) {
+  $("mensaje-flotante").textContent =
+    texto;
+
+  $("mensaje-flotante").hidden =
+    false;
+
+  clearTimeout(
+    mostrarMensaje.temporizador
+  );
+
+  mostrarMensaje.temporizador =
+    setTimeout(
+      () => {
+        $("mensaje-flotante").hidden =
+          true;
+      },
+      2600
+    );
+}
+
+/* SEMILLITA */
 
 const preguntas = [
   [
-    "¿Qué es Cosecha Libre?",
-    "Es una propuesta de web móvil para acercar pequeños productores y compradores locales. Todavía no funciona como mercado."
+    "¿Qué diferencia a Cosecha Libre?",
+    "Organiza próximas cosechas y permite expresar interés antes de que el producto salga del campo. No funciona como inventario de supermercado."
   ],
   [
-    "¿Puedo reservar ahora?",
-    "Todavía no. Las fichas no contienen inventario, precios ni fechas confirmadas."
+    "¿La solicitud garantiza una compra?",
+    "No. El productor debe confirmar disponibilidad, cantidad, precio y entrega por WhatsApp."
   ],
   [
-    "¿Qué busca validar?",
-    "El proyecto quiere explorar reservas antes de la cosecha y agrupación de solicitudes por cantón. Ambas ideas deben probarse con usuarios reales."
+    "¿Cómo se agrupa la demanda?",
+    "El prototipo suma cantidades expresadas por familias, sodas y restaurantes dentro de un cantón."
   ],
   [
-    "¿Cómo participarían las sodas?",
-    "Podrían consultar cosechas y expresar una necesidad de compra. El acuerdo se realizaría directamente con el productor."
+    "¿La plataforma recibe pagos?",
+    "No en el alcance inicial. El productor y el comprador acuerdan directamente el pago y la entrega."
   ],
   [
-    "¿Las sodas mostradas son reales?",
-    "No. Sus nombres y necesidades fueron inventados para ilustrar el prototipo."
+    "¿Los perfiles son reales?",
+    "No. Los perfiles, negocios, cantidades y fechas actuales son ejemplos ficticios."
   ],
   [
-    "¿La web cobra o hace entregas?",
-    "El alcance inicial no contempla comisión, pagos en línea ni logística propia."
+    "¿Cómo se activa WhatsApp?",
+    "Se agrega al directorio un número autorizado en formato 506 más ocho dígitos. El botón prepara el mensaje y abre la conversación."
   ],
   [
-    "¿Dónde estaría disponible?",
-    "El cantón del piloto todavía no se ha definido. Las zonas visibles son escenarios de navegación."
-  ],
-  [
-    "¿Semillita asesora sobre cultivos?",
-    "No. Semillita solo explica el proyecto y muestra respuestas programadas."
-  ],
-  [
-    "¿Guardan mis datos?",
-    "Este prototipo no incluye cuentas ni formularios. El buscador funciona directamente en su navegador."
+    "¿Semillita brinda asesoría agrícola?",
+    "No. Semillita solo explica el proyecto mediante respuestas programadas."
   ]
 ];
 
-preguntas.forEach(([pregunta, respuesta]) => {
-  const boton =
-    document.createElement("button");
+preguntas.forEach(
+  ([pregunta, respuesta]) => {
+    const boton =
+      document.createElement("button");
 
-  boton.type = "button";
-  boton.textContent = pregunta;
+    boton.type = "button";
+    boton.textContent = pregunta;
 
-  boton.addEventListener("click", () => {
-    $("respuesta-bot").textContent =
-      respuesta;
+    boton.addEventListener(
+      "click",
+      () => {
+        $("respuesta-bot").textContent =
+          respuesta;
 
-    document.querySelector(
-      ".bot-cuerpo"
-    ).scrollTop = 0;
-  });
+        document
+          .querySelector(".cuerpo-bot")
+          .scrollTop = 0;
+      }
+    );
 
-  $("opciones-bot").append(boton);
-});
+    $("opciones-bot").append(boton);
+  }
+);
 
 let botonAnterior =
   $("abrir-bot");
 
 function mostrarBot(abrir, origen) {
-  if (origen) botonAnterior = origen;
+  if (origen) {
+    botonAnterior = origen;
+  }
 
   $("bot").hidden = !abrir;
 
@@ -2033,34 +3127,8 @@ $("preguntar-semillita").addEventListener(
 
 $("cerrar-bot").addEventListener(
   "click",
-  () => mostrarBot(false)
-);
-
-/* DIÁLOGO DE PRODUCTOS */
-
-document
-  .querySelector(".cerrar-dialogo")
-  .addEventListener("click", () => {
-    $("dialogo").close();
-  });
-
-$("dialogo").addEventListener(
-  "click",
-  evento => {
-    if (evento.target !== $("dialogo")) return;
-
-    const limites =
-      $("dialogo").getBoundingClientRect();
-
-    const fuera =
-      evento.clientX < limites.left ||
-      evento.clientX > limites.right ||
-      evento.clientY < limites.top ||
-      evento.clientY > limites.bottom;
-
-    if (fuera) {
-      $("dialogo").close();
-    }
+  () => {
+    mostrarBot(false);
   }
 );
 
@@ -2072,18 +3140,10 @@ document.addEventListener(
     if (!$("bot").hidden) {
       mostrarBot(false);
     }
-
-    if (
-      $("sidebar")
-        .classList
-        .contains("abierto-movil")
-    ) {
-      cerrarMenuMovil();
-    }
   }
 );
 
-/* INICIO */
+/* INICIO DE LA WEB */
 
 const vistaInicial =
   titulos[location.hash.slice(1)]
@@ -2095,11 +3155,9 @@ mostrarVista(
   false
 );
 
-mostrarProductos();
-
-actualizarBotonMenu(
-  !esMovil()
-);
+mostrarCosechas();
+mostrarProductores();
+actualizarMenu(!esMovil());
 </script>
 
 </body>
